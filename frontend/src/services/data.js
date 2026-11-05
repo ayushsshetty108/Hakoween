@@ -20,7 +20,17 @@ const csvRows = (text) => {
   return rows.map(cells => Object.fromEntries(headers.map((header,i)=>[header,cells[i]??''])))
 }
 const number = value => value === '' || value == null || value === '-999' ? null : Number.isFinite(Number(value)) ? Number(value) : null
-const getText = async (route) => { const response = await fetch(`/workspace-data/${route}`); if (!response.ok) throw new Error(`Local dataset unavailable (${route})`); return response.text() }
+const DATA_BASE = (import.meta.env.VITE_WORKSPACE_DATA_BASE_URL || '/workspace-data').replace(/\/$/, '')
+const getText = async (route) => {
+  const datasetPath = /\.(csv|json)$/i.test(route) ? route : `${route}.csv`
+  const response = await fetch(`${DATA_BASE}/${datasetPath}`)
+  if (!response.ok) throw new Error(`Project dataset "${route}" unavailable (HTTP ${response.status}). Verify the Render static publish directory includes /workspace-data/${datasetPath}.`)
+  const contentType = response.headers.get('content-type') || ''
+  if (!contentType.includes('csv') && !contentType.includes('text/plain')) {
+    throw new Error(`Project dataset "${route}" returned ${contentType || 'an unknown content type'}, not CSV. Verify the Render rewrite and static publish directory.`)
+  }
+  return response.text()
+}
 const cache = new Map()
 const cached = (key, loader) => { if (!cache.has(key)) cache.set(key, loader()); return cache.get(key) }
 
@@ -75,7 +85,7 @@ export const getWeather = (id) => cached(`weather-${id}`, async () => {
   })).filter(row => row.date)
 })
 export const getBoundary = (id) => cached(`boundary-${id}`, async () => {
-  const response = await fetch(`/workspace-data/boundary/${id}`)
+  const response = await fetch(`${DATA_BASE}/boundary/${id}`)
   if (!response.ok) throw new Error('Verified basin boundary could not be loaded.')
   return response.json()
 })

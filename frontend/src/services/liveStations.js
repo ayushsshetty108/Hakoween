@@ -60,9 +60,9 @@ function normalizeBackendRows(payload) {
       streamflow: streamflow ? measurement({ ...streamflow, parameter_code: streamflow.parameter_code || '00060' }) : null,
       gaugeHeight: gaugeHeight ? measurement({ ...gaugeHeight, parameter_code: gaugeHeight.parameter_code || '00065' }) : null,
       risk: riskClass && thresholdSource ? { classification: String(riskClass).toLowerCase(), thresholdSource, thresholdValue: Number.isFinite(thresholdValue) ? thresholdValue : null, thresholdUnit: raw.risk?.threshold_unit || raw.risk_threshold_unit || null } : null,
-      rateOfRise: typeof rateValue === 'object' ? rateValue.value ?? null : rateValue,
-      rateOfRiseUnit: raw.rate_of_rise_unit ?? raw.rateOfRiseUnit ?? (typeof rateValue === 'object' ? rateValue.unit : null),
-      rateOfRiseWindow: raw.rate_of_rise_window ?? raw.rateOfRiseWindow ?? (typeof rateValue === 'object' ? rateValue.window : null),
+      rateOfRise: rateValue && typeof rateValue === 'object' ? rateValue.value ?? null : rateValue,
+      rateOfRiseUnit: raw.rate_of_rise_unit ?? raw.rateOfRiseUnit ?? (rateValue && typeof rateValue === 'object' ? rateValue.unit : null),
+      rateOfRiseWindow: raw.rate_of_rise_window ?? raw.rateOfRiseWindow ?? (rateValue && typeof rateValue === 'object' ? rateValue.window : null),
       rapidRiseAlert: raw.rapid_rise_alert === true || raw.alerts?.some?.(alert => alert.type === 'rapid_rise' && alert.active === true),
       unusualObservation: raw.unusual_observation === true || raw.anomaly?.active === true,
       alerts: Array.isArray(raw.alerts) ? raw.alerts : [],
@@ -89,9 +89,6 @@ export async function fetchLiveStationSnapshot({ signal, force = false } = {}) {
   if (inFlight) return inFlight
   inFlight = (async () => {
     try {
-      if (import.meta.env?.DEV && !import.meta.env?.VITE_API_BASE_URL) {
-        throw new Error('No Floodcast backend URL configured for local development.')
-      }
       const payload = await getApiLiveStations({ signal })
       const [stations, predictionsResult] = await Promise.all([
         Promise.resolve(normalizeBackendRows(payload)),
@@ -116,7 +113,7 @@ export async function fetchLiveStationSnapshot({ signal, force = false } = {}) {
       if (!import.meta.env?.DEV) throw new Error('Live readings are waiting for the Floodcast backend at /api/stations/live.')
       try {
         const publicData = await getPublicUsgsMeasurements(signal)
-        const snapshot = { ...publicData, source: 'USGS Water Data API · development proxy', backendConnected: false, backendMessage: 'Floodcast backend is not connected; using the public USGS feed in development.', fetchedAt: new Date().toISOString() }
+        const snapshot = { ...publicData, source: 'USGS Water Data API · development proxy', backendConnected: false, backendMessage: `Floodcast API failed (${backendError.message}); using the public USGS feed in development.`, fetchedAt: new Date().toISOString() }
         liveCache = { snapshot, cachedAt: Date.now() }
         return snapshot
       } catch (usgsError) {

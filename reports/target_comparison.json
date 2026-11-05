@@ -1,0 +1,231 @@
+{
+  "split": "LeaveOneGroupOut by station (GroupKFold only above 8 stations)",
+  "target_modes": [
+    "raw_discharge",
+    "specific_discharge"
+  ],
+  "specific_transform_use_log": false,
+  "folds": [
+    {
+      "fold": 1,
+      "held_out_stations": [
+        "01613900",
+        "04024430",
+        "11501000"
+      ],
+      "models": {
+        "raw_discharge": {
+          "overall_rmse": 957.6672478463975,
+          "extreme_rmse": 1869.2751302533727,
+          "mae": 588.2572556344835,
+          "r2": -1.1171982292615006
+        },
+        "specific_discharge": {
+          "overall_rmse": 1510.1764297359164,
+          "extreme_rmse": 2712.6732026881323,
+          "mae": 642.3266800959539,
+          "r2": -4.264869705657493
+        }
+      }
+    },
+    {
+      "fold": 2,
+      "held_out_stations": [
+        "01595800",
+        "04010500",
+        "10039500"
+      ],
+      "models": {
+        "raw_discharge": {
+          "overall_rmse": 793.6786649504716,
+          "extreme_rmse": 1257.0534524490554,
+          "mae": 499.2727249254858,
+          "r2": -0.7511598634791337
+        },
+        "specific_discharge": {
+          "overall_rmse": 2231.074008239911,
+          "extreme_rmse": 3848.06437844229,
+          "mae": 1059.9236575126106,
+          "r2": -12.837713543711992
+        }
+      }
+    },
+    {
+      "fold": 3,
+      "held_out_stations": [
+        "01427207",
+        "02489500",
+        "09380000"
+      ],
+      "models": {
+        "raw_discharge": {
+          "overall_rmse": 10432.965676599708,
+          "extreme_rmse": 24413.04996258638,
+          "mae": 6931.982497780163,
+          "r2": -0.5057547709948025
+        },
+        "specific_discharge": {
+          "overall_rmse": 9752.898311242141,
+          "extreme_rmse": 21635.43271976228,
+          "mae": 5998.037004007997,
+          "r2": -0.315849085063419
+        }
+      }
+    },
+    {
+      "fold": 4,
+      "held_out_stations": [
+        "01200000",
+        "02339495",
+        "07047855"
+      ],
+      "models": {
+        "raw_discharge": {
+          "overall_rmse": 692.5730611889047,
+          "extreme_rmse": 967.9031394430829,
+          "mae": 445.02353788787315,
+          "r2": -4.075220768040195
+        },
+        "specific_discharge": {
+          "overall_rmse": 194.27418306432435,
+          "extreme_rmse": 463.7118355412972,
+          "mae": 108.1373772138611,
+          "r2": 0.6006497768700154
+        }
+      }
+    },
+    {
+      "fold": 5,
+      "held_out_stations": [
+        "01094400",
+        "02228500",
+        "07010000"
+      ],
+      "models": {
+        "raw_discharge": {
+          "overall_rmse": 163476.70274199624,
+          "extreme_rmse": 317941.6013149625,
+          "mae": 81351.54792654602,
+          "r2": -0.25967988016360666
+        },
+        "specific_discharge": {
+          "overall_rmse": 275559.67797839874,
+          "extreme_rmse": 550823.7699372532,
+          "mae": 96988.17521128847,
+          "r2": -2.5791491012061387
+        }
+      }
+    },
+    {
+      "fold": 6,
+      "held_out_stations": [
+        "01010000",
+        "02176930",
+        "06614800"
+      ],
+      "models": {
+        "raw_discharge": {
+          "overall_rmse": 2639.0285121968395,
+          "extreme_rmse": 7728.312536379489,
+          "mae": 1041.1303398972173,
+          "r2": 0.003956268761502568
+        },
+        "specific_discharge": {
+          "overall_rmse": 2171.711303194007,
+          "extreme_rmse": 6625.50580319359,
+          "mae": 561.0586630145879,
+          "r2": 0.3254806307410656
+        }
+      }
+    },
+    {
+      "fold": 7,
+      "held_out_stations": [
+        "02087500",
+        "05387440",
+        "08158000"
+      ],
+      "models": {
+        "raw_discharge": {
+          "overall_rmse": 10404.129341575306,
+          "extreme_rmse": 11878.065203941922,
+          "mae": 5740.949134394475,
+          "r2": -35.23064174973517
+        },
+        "specific_discharge": {
+          "overall_rmse": 21897.425328198446,
+          "extreme_rmse": 27950.577154634928,
+          "mae": 9644.740279976757,
+          "r2": -159.49098762208806
+        }
+      }
+    },
+    {
+      "fold": 8,
+      "held_out_stations": [
+        "01595300",
+        "01646500",
+        "04031000"
+      ],
+      "models": {
+        "raw_discharge": {
+          "overall_rmse": 9746.249968397104,
+          "extreme_rmse": 29326.27653428362,
+          "mae": 2746.806522889909,
+          "r2": 0.3242574040612093
+        },
+        "specific_discharge": {
+          "overall_rmse": 7864.052761617922,
+          "extreme_rmse": 22325.927750993775,
+          "mae": 2504.400651306122,
+          "r2": 0.5600543363170144
+        }
+      }
+    }
+  ],
+  "metrics": {
+    "raw_discharge": {
+      "overall_rmse": 58507.366325429386,
+      "extreme_rmse": 114017.43740229505,
+      "mae": 12542.881166362193,
+      "r2": 0.014130853103347163
+    },
+    "specific_discharge": {
+      "overall_rmse": 98465.34154911633,
+      "extreme_rmse": 196579.1631821381,
+      "mae": 14845.479592672064,
+      "r2": -1.7923185453817818
+    }
+  },
+  "normalization_best": {
+    "overall_rmse": 58507.366325429386,
+    "extreme_rmse": 114017.43740229505,
+    "mae": 12542.881166362193,
+    "r2": 0.014130853103347163
+  },
+  "normalization_worst": {
+    "overall_rmse": 98465.34154911633,
+    "extreme_rmse": 196579.1631821381,
+    "mae": 14845.479592672064,
+    "r2": -1.7923185453817818
+  },
+  "local_weighted_scores": {
+    "raw_discharge": 100.0,
+    "specific_discharge": 0.0
+  },
+  "normalized_components": {
+    "raw_discharge": {
+      "overall_rmse": 100.0,
+      "extreme_rmse": 100.0,
+      "mae": 100.0,
+      "r2": 100.0
+    },
+    "specific_discharge": {
+      "overall_rmse": 0.0,
+      "extreme_rmse": 0.0,
+      "mae": 0.0,
+      "r2": 0.0
+    }
+  },
+  "normalization_note": "Local min-max uses the compared OOF target modes. Official all-team min/max values can be supplied to compute_weighted_score when published."
+}

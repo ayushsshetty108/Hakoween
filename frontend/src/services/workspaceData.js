@@ -46,13 +46,14 @@ export function parseCsv(text) {
 export async function getDataset(id, { signal } = {}) {
   const dataset = DATASETS.find(item => item.id === id)
   if (!dataset) throw new Error(`Unknown dataset: ${id}`)
-  const response = await fetch(`${DATA_BASE}/${encodeURIComponent(id)}`, { signal })
+  const extension = id === 'target_comparison' ? 'json' : 'csv'
+  const response = await fetch(`${DATA_BASE}/${encodeURIComponent(id)}.${extension}`, { signal })
   if (!response.ok) throw new Error(`${dataset.label} is unavailable (${response.status}).`)
   return parseCsv(await response.text())
 }
 
 export async function getValidationSummary({ signal } = {}) {
-  const response = await fetch(`${DATA_BASE}/target_comparison`, { signal })
+  const response = await fetch(`${DATA_BASE}/target_comparison.json`, { signal })
   if (!response.ok) throw new Error(`Validation summary is unavailable (${response.status}).`)
   return response.json()
 }

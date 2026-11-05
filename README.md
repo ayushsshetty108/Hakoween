@@ -17,7 +17,7 @@ The production model is the fixed HGB/CatBoost/LightGBM blend with the `hydro_pl
 
 ### Frontend dashboard
 
-`frontend/` is a Vite/React application with Overview, Monitoring, Predictions, Weather, Catchment, and Performance pages. Components and page routes live in `frontend/src/`; API and data adapters live in `frontend/src/services/`. The repository does **not** include a backend. The frontend README documents its expected API routes, local development data routes, and live USGS/Open-Meteo integrations: [`frontend/README.md`](frontend/README.md).
+`frontend/` is a Vite/React application with Overview, Monitoring, Predictions, Weather, Catchment, and Performance pages. Components and page routes live in `frontend/src/`; API and data adapters live in `frontend/src/services/`. `backend/app.py` serves live USGS measurements and experimental daily estimates from the saved model and Open-Meteo forecasts. These estimates are not operational flood warnings; risk classifications remain unavailable until verified thresholds are configured. See the frontend setup and API notes in [`frontend/README.md`](frontend/README.md).
 
 ## Install and run the Python pipeline
 
@@ -58,12 +58,11 @@ These runs write experiment reports and OOF predictions to their output director
 ## Run the frontend
 
 ```bash
-cd frontend
-npm install
+npm ci --prefix frontend
 npm run dev
 ```
 
-Create a production bundle with `npm run build`. For a hosted backend on another origin, configure `VITE_API_BASE_URL` as described in `frontend/README.md`.
+`npm run dev` starts both the Python API and Vite frontend from the repository root. Create a production bundle with `npm run build`. The Render Blueprint in `render.yaml` deploys the frontend and API as separate services.
 
 ## Data and validation notes
 

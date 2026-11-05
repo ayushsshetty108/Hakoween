@@ -1,6 +1,16 @@
 # FLOODCAST frontend
 
-Run `npm ci`, then `npm run dev` from this directory. `npm run build` creates the production bundle.
+Run `npm ci`, then `npm run dev` from this directory. `npm run build` creates a production bundle and copies an explicit allowlist of public project datasets into it.
+
+## Deploy to Render
+
+The repository includes a Render Blueprint in `../render.yaml`. In Render, create a new Blueprint from this repository and select the `floodcast` static site. The service builds from the repository root so the allowlisted datasets outside `frontend/` are available, runs `npm ci --prefix frontend && npm --prefix frontend run build`, publishes `frontend/dist`, and rewrites application routes to `index.html` for React Router deep links.
+
+The build requires the tracked prediction, training, test, source, and validation files listed in `frontend/scripts/build.mjs`. It bundles only those allowlisted data files under `/workspace-data/`; it does not expose model artifacts, raw API response archives, credentials, or arbitrary repository files. Data is public to site visitors and should only be bundled if it is approved for public access. The temporary public copies are removed from the working tree after the build.
+
+The Blueprint deploys a separate Python API service and injects its host into the static site's `VITE_API_BASE_URL`. Set `CORS_ORIGINS` on the API if the frontend is hosted at a different origin. `VITE_WORKSPACE_DATA_BASE_URL` defaults to `/workspace-data` and normally needs no override for this Render setup.
+
+To redeploy with refreshed prediction or data files, update the source files in Git and trigger a Render deploy. The API service uses the checked-in model artifact for experimental daily estimates from Open-Meteo weather forecasts; it does not accept or execute arbitrary uploaded judge files.
 
 The application includes `/dashboard`, `/live-map`, `/stations`, `/predictions`, `/analytics`, `/flood-alerts`, `/model-performance`, `/data-explorer`, and `/about`. Existing `/weather` and `/catchment` pages remain available. Source datasets are read-only and are not copied or edited.
 
@@ -14,11 +24,9 @@ In development, `src/services/liveStations.js` requests the USGS Water Data API 
 
 `src/services/openMeteo.js` requests a bounded seven-day past/seven-day forecast window for only the selected station coordinate. Responses are cached per station for two hours. Temperature, precipitation/rainfall, soil-moisture depth, snowfall and snow depth remain model estimates with units, time labels and point/grid provenance. The UI does not treat these values as basin averages. Any snowmelt description is explicitly derived from returned weather values; it is not a direct measurement.
 
-## Backend adapter
+## Backend API
 
-The backend is not present in this project. `src/services/api.js` contains the reusable frontend adapter; set `VITE_API_BASE_URL` when the API is hosted on another origin.
-
-Start the application with `npm run dev` and build it with `npm run build`. The development data endpoint resolves project files from the repository root, so run Vite from `frontend/`.
+From the repository root, install the Python requirements and frontend dependencies once, then run `npm run dev` to start the API at `http://localhost:8000` and Vite at `http://localhost:5173`. Vite proxies `/api` requests to the local API. To run either service separately, use `python -m uvicorn backend.app:app --reload --port 8000` from the repository root or `npm run dev` from `frontend/`.
 
 | Route | Frontend use |
 | --- | --- |
@@ -30,9 +38,9 @@ Start the application with `npm run dev` and build it with `npm run build`. The 
 | `GET /api/predictions` | Prediction series, grouped by station |
 | `GET /api/predictions/{station_id}` | Station prediction adapter |
 
-The live response can use `{ "stations": [...] }` and include `station_id`, `streamflow` and `gauge_height` objects with `value`, `time`, `unit`, `approval_status`, and `parameter_code`. Risk must include both a classification and its threshold source to be displayed. Prediction series should include station ID, generated time, valid time, predicted discharge, unit and model metadata when available. Calibrated uncertainty and feature explanations are displayed only when present in the model response.
+The live response includes `station_id`, `streamflow` and `gauge_height` objects with `value`, `time`, `unit`, `approval_status`, and `parameter_code`. Prediction series include station ID, generated time, valid time, predicted discharge, unit and model metadata. These are experimental model estimates using Open-Meteo forecast weather and are not calibrated operational forecasts or flood warnings. The project has no verified station-specific flood thresholds; risk classifications therefore remain unavailable rather than being fabricated.
 
-The development adapter falls back to public USGS observations if the Floodcast backend is unavailable. Production requires the backend live route; the direct public feed is intentionally development-only. Alert center entries are derived from current returned data and backend alert flags. Persistent alert history, calibrated model evaluation, and what-if simulation remain unavailable until their backend/model endpoints return those outputs. No flood thresholds, model predictions, or missing measurements are synthesized.
+The development adapter falls back to public USGS observations if the Floodcast backend is unavailable. Production requires the backend live route; the direct public feed is intentionally development-only. Alert center entries are derived from current returned data and backend alert flags. Persistent alert history, calibrated model evaluation, and what-if simulation remain unavailable until their backend/model endpoints return those outputs.
 
 ## Data sources
 

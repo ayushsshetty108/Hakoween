@@ -119,7 +119,7 @@ function StationMarker({ station, selected, onSelect, markerRefs, timelineRecord
       </div>
       {selected===station.id&&timelineRecord&&<div className="popup-timeline"><span>Historical timeline · USGS daily mean</span><b>{new Intl.NumberFormat('en-US').format(timelineRecord.discharge)} cfs</b><small>{timelineRecord.date}</small></div>}
       <div className="popup-status"><Clock3 size={13}/><span>{freshness.label}</span><b>{riskColor(live?.risk)==='neutral'?'Risk classification unavailable':`${live.risk.classification} · ${live.risk.thresholdSource}`}</b></div>
-      <div className="popup-prediction"><span>FLOODCAST predicted discharge</span><b>{live?.prediction?.predicted_discharge!=null?`${readableValue(live.prediction.predicted_discharge)} ${live.prediction.unit||stream?.unit||''}`:'No validated prediction available'}</b></div>
+      <div className="popup-prediction"><span>Experimental FLOODCAST estimate</span><b>{live?.prediction?.predicted_discharge!=null?`${readableValue(live.prediction.predicted_discharge)} ${live.prediction.unit||stream?.unit||''}`:'Model estimate unavailable'}</b></div>
     </div></Popup>
   </Marker>
 }
@@ -133,7 +133,7 @@ export function LiveStationSummary({ station }) {
     {loading&&!snapshot?<div className="live-empty"><LoaderCircle size={17}/>Requesting latest measurements from USGS…</div>:<>
       <div className="live-measurement-grid"><div className="live-measurement primary"><span>Observed streamflow <em>USGS · 00060</em></span><b>{readableValue(stream?.value)} <small>{stream?.unit||''}</small></b><span>{stream?.time?new Date(stream.time).toLocaleString():'No continuous flow reading returned'}</span><span className="approval-status">{stream?.approvalStatus||'Approval status unavailable'}</span></div><div className="live-measurement"><span>Observed gauge height <em>USGS · 00065</em></span><b>{readableValue(height?.value)} <small>{height?.unit||''}</small></b><span>{height?.time?new Date(height.time).toLocaleString():'Not reported for this station'}</span><span className="approval-status">{height?.approvalStatus||'Approval status unavailable'}</span></div></div>
       <div className="live-detail-meta"><span className={freshness.stale?'stale':''}><Clock3 size={13}/>{freshness.label}</span><span><BadgeCheck size={13}/>{stream?.approvalStatus||'Data status unavailable'}</span></div>
-      <div className="live-prediction-row"><span>FLOODCAST predicted discharge</span><b>{live?.prediction?.predicted_discharge!=null?`${readableValue(live.prediction.predicted_discharge)} ${live.prediction.unit||stream?.unit||''}`:'No validated prediction available'}</b><small>Predictions are kept separate from USGS observations.</small></div>
+      <div className="live-prediction-row"><span>Experimental FLOODCAST estimate</span><b>{live?.prediction?.predicted_discharge!=null?`${readableValue(live.prediction.predicted_discharge)} ${live.prediction.unit||stream?.unit||''}`:'Model estimate unavailable'}</b><small>Weather-driven model estimate only; not a validated flood warning. Kept separate from USGS observations.</small></div>
       {riskColor(live?.risk)==='neutral'?<div className="risk-unavailable"><AlertCircle size={14}/><span>Risk classification unavailable — no verified station-specific flood thresholds are connected.</span></div>:<div className={`risk-supported ${riskColor(live.risk)}`}><span>Threshold-based risk</span><b>{live.risk.classification}</b><small>{live.risk.thresholdSource}</small></div>}
     </>}
     {error&&<div className="live-error"><AlertCircle size={14}/><span>{error.message}</span></div>}
@@ -207,7 +207,7 @@ export function StationMap({ stations, selected, onSelect, timelineRecord, weath
       <Select value={mapDataMode} onChange={setMapDataMode} options={[{value:'stations',label:'Station markers'},{value:'discharge',label:'Live discharge'},{value:'rainfall',label:'Forecast rainfall'}]} label="Map measurement layer"/>
       <Select value={layer} onChange={setLayer} options={[{value:'street',label:'Street map'},{value:'satellite',label:'Satellite view'},{value:'terrain',label:'Terrain'}]} label="Basemap"/>
     </div>
-    <div className={`map-wrap ${layer==='street'?'dark-map':'light-map'} ${fullScreen?'map-fullscreen':''}`} ref={mapShell}>
+    <div className={`map-wrap ${layer==='street'?'street-map':'light-map'} ${fullScreen?'map-fullscreen':''}`} ref={mapShell}>
       <MapContainer center={[38,-91]} zoom={4} scrollWheelZoom={true} zoomControl={true}>
         {layer==='street'
           ? <TileLayer key="street" attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>' url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"/>

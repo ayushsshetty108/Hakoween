@@ -4,5 +4,9 @@ __pycache__/
 data/processed/*.csv
 reports/*.csv
 reports/*.json
+!reports/oof_raw_discharge.csv
+!reports/per_station_raw_discharge.csv
+!reports/target_comparison.json
 predictions.csv
 models/*.joblib
+!models/floodcast_final.joblib

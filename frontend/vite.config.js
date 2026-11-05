@@ -67,6 +67,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     proxy: {
+      '/api': { target: 'http://127.0.0.1:8000', changeOrigin: true },
       // Development-only public USGS proxy; production should use the Floodcast API.
       '/usgs-api': { target: 'https://api.waterdata.usgs.gov', changeOrigin: true, rewrite: path => path.replace(/^\/usgs-api/, '/ogcapi/v1') },
       // Bounded NLDI flowline queries for the optional river network overlay.
