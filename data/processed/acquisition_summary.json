@@ -1,0 +1,305 @@
+{
+  "raw_files": [
+    "data\\raw\\acquisition_failures.json",
+    "data\\raw\\api_manifest.json",
+    "data\\raw\\feature_context.csv",
+    "data\\raw\\openmeteo_responses\\openmeteo_01646500.json",
+    "data\\raw\\openmeteo_responses\\openmeteo_02087500.json",
+    "data\\raw\\openmeteo_responses\\openmeteo_07010000.json",
+    "data\\raw\\openmeteo_responses\\openmeteo_08158000.json",
+    "data\\raw\\openmeteo_responses\\openmeteo_11447650.json",
+    "data\\raw\\openmeteo_weather.csv",
+    "data\\raw\\station_metadata.csv",
+    "data\\raw\\streamstats_catchment_attributes.csv",
+    "data\\raw\\streamstats_responses\\delineation_01646500.json",
+    "data\\raw\\streamstats_responses\\delineation_02087500.json",
+    "data\\raw\\streamstats_responses\\delineation_07010000.json",
+    "data\\raw\\streamstats_responses\\delineation_08158000.json",
+    "data\\raw\\streamstats_responses\\delineation_11447650.json",
+    "data\\raw\\streamstats_responses\\hydro_01646500.json",
+    "data\\raw\\streamstats_responses\\hydro_02087500.json",
+    "data\\raw\\streamstats_responses\\hydro_07010000.json",
+    "data\\raw\\streamstats_responses\\hydro_08158000.json",
+    "data\\raw\\streamstats_responses\\hydro_11447650.json",
+    "data\\raw\\test.csv",
+    "data\\raw\\train.csv",
+    "data\\raw\\usgs_discharge.csv",
+    "data\\raw\\usgs_responses\\daily_01646500_page_001.json",
+    "data\\raw\\usgs_responses\\daily_02087500_page_001.json",
+    "data\\raw\\usgs_responses\\daily_07010000_page_001.json",
+    "data\\raw\\usgs_responses\\daily_08158000_page_001.json",
+    "data\\raw\\usgs_responses\\station_metadata_01646500.json",
+    "data\\raw\\usgs_responses\\station_metadata_02087500.json",
+    "data\\raw\\usgs_responses\\station_metadata_07010000.json",
+    "data\\raw\\usgs_responses\\station_metadata_08158000.json",
+    "data\\raw\\usgs_responses\\station_metadata_11447650.json",
+    "data\\raw\\usgs_station_metadata.csv"
+  ],
+  "processed_files": [
+    "data\\processed\\.gitkeep",
+    "data\\processed\\acquisition_summary.json",
+    "data\\processed\\data_provenance.json",
+    "data\\processed\\floodcast_dataset.csv"
+  ],
+  "usgs_discharge_records": 13147,
+  "weather_records": 18260,
+  "integrated_records": 18260,
+  "stations": {
+    "usgs_discharge": {
+      "01646500": {
+        "status": "success",
+        "rows": 3287,
+        "date_start": "2010-01-01",
+        "date_end": "2018-12-31",
+        "pages": 1
+      },
+      "02087500": {
+        "status": "success",
+        "rows": 3287,
+        "date_start": "2010-01-01",
+        "date_end": "2018-12-31",
+        "pages": 1
+      },
+      "07010000": {
+        "status": "success",
+        "rows": 3287,
+        "date_start": "2010-01-01",
+        "date_end": "2018-12-31",
+        "pages": 1
+      },
+      "08158000": {
+        "status": "success",
+        "rows": 3286,
+        "date_start": "2010-01-01",
+        "date_end": "2018-12-31",
+        "pages": 1
+      }
+    },
+    "weather": {
+      "01646500": {
+        "status": "success",
+        "rows": 3652,
+        "date_start": "2010-01-01",
+        "date_end": "2019-12-31",
+        "requested_coordinates": [
+          38.949777777777776,
+          -77.12763888888888
+        ],
+        "weather_grid_coordinates": [
+          39.0,
+          -77.25
+        ],
+        "model": "ERA5",
+        "timezone": "GMT",
+        "soil_hours_missing_or_incomplete": 0
+      },
+      "02087500": {
+        "status": "success",
+        "rows": 3652,
+        "date_start": "2010-01-01",
+        "date_end": "2019-12-31",
+        "requested_coordinates": [
+          35.6472222222222,
+          -78.4052777777778
+        ],
+        "weather_grid_coordinates": [
+          35.75,
+          -78.5
+        ],
+        "model": "ERA5",
+        "timezone": "GMT",
+        "soil_hours_missing_or_incomplete": 0
+      },
+      "07010000": {
+        "status": "success",
+        "rows": 3652,
+        "date_start": "2010-01-01",
+        "date_end": "2019-12-31",
+        "requested_coordinates": [
+          38.629,
+          -90.1797777777778
+        ],
+        "weather_grid_coordinates": [
+          38.75,
+          -90.25
+        ],
+        "model": "ERA5",
+        "timezone": "GMT",
+        "soil_hours_missing_or_incomplete": 0
+      },
+      "08158000": {
+        "status": "success",
+        "rows": 3652,
+        "date_start": "2010-01-01",
+        "date_end": "2019-12-31",
+        "requested_coordinates": [
+          30.24613888888889,
+          -97.68005555555555
+        ],
+        "weather_grid_coordinates": [
+          30.25,
+          -97.75
+        ],
+        "model": "ERA5",
+        "timezone": "GMT",
+        "soil_hours_missing_or_incomplete": 0
+      },
+      "11447650": {
+        "status": "success",
+        "rows": 3652,
+        "date_start": "2010-01-01",
+        "date_end": "2019-12-31",
+        "requested_coordinates": [
+          38.4556638888889,
+          -121.501616666667
+        ],
+        "weather_grid_coordinates": [
+          38.5,
+          -121.5
+        ],
+        "model": "ERA5",
+        "timezone": "GMT",
+        "soil_hours_missing_or_incomplete": 0
+      }
+    },
+    "streamstats": {
+      "01646500": {
+        "status": "unverified: SS-Delineate warning: Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.; SS-Hydro did not return a valid drainage area for station verification",
+        "verified": false
+      },
+      "02087500": {
+        "status": "verified",
+        "verified": true
+      },
+      "07010000": {
+        "status": "unverified: SS-Delineate warning: Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.; SS-Hydro did not return a valid drainage area for station verification",
+        "verified": false
+      },
+      "08158000": {
+        "status": "unverified: SS-Delineate warning: Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.; Returned HUC 1209021499 does not match USGS HUC 120902050306; SS-Hydro did not return a valid drainage area for station verification",
+        "verified": false
+      },
+      "11447650": {
+        "status": "verified",
+        "verified": true
+      }
+    }
+  },
+  "failed_request_count": 1,
+  "recovered_request_failure_count": 1,
+  "terminal_failure_count": 0,
+  "coverage_checks": {
+    "expected_training_station_date_keys": 13147,
+    "actual_training_discharge_rows": 13147,
+    "training_discharge_key_coverage_complete": true,
+    "expected_weather_station_daily_keys_over_contiguous_ranges": 18260,
+    "actual_weather_rows": 18260,
+    "weather_coverage_complete_for_contiguous_ranges": true,
+    "weather_missing_feature_counts": {
+      "station_id": 0,
+      "date": 0,
+      "precipitation_mm": 0,
+      "temp_max_c": 0,
+      "temp_min_c": 0,
+      "temp_mean_c": 0,
+      "soil_moisture_0_7cm": 0,
+      "soil_moisture_7_28cm": 0
+    },
+    "unmatched_test_weather_rows": 5113
+  },
+  "training_ready": false,
+  "predictions_csv_modified": false,
+  "model_files_modified": false,
+  "weather_station_status": {
+    "01646500": {
+      "status": "success",
+      "rows": 3652,
+      "date_start": "2010-01-01",
+      "date_end": "2019-12-31",
+      "requested_coordinates": [
+        38.949777777777776,
+        -77.12763888888888
+      ],
+      "weather_grid_coordinates": [
+        39.0,
+        -77.25
+      ],
+      "model": "ERA5",
+      "timezone": "GMT",
+      "soil_hours_missing_or_incomplete": 0,
+      "soil_7_28_hours_missing_or_incomplete": 0
+    },
+    "02087500": {
+      "status": "success",
+      "rows": 3652,
+      "date_start": "2010-01-01",
+      "date_end": "2019-12-31",
+      "requested_coordinates": [
+        35.6472222222222,
+        -78.4052777777778
+      ],
+      "weather_grid_coordinates": [
+        35.75,
+        -78.5
+      ],
+      "model": "ERA5",
+      "timezone": "GMT",
+      "soil_hours_missing_or_incomplete": 0,
+      "soil_7_28_hours_missing_or_incomplete": 0
+    },
+    "07010000": {
+      "status": "success",
+      "rows": 3652,
+      "date_start": "2010-01-01",
+      "date_end": "2019-12-31",
+      "requested_coordinates": [
+        38.629,
+        -90.1797777777778
+      ],
+      "weather_grid_coordinates": [
+        38.75,
+        -90.25
+      ],
+      "model": "ERA5",
+      "timezone": "GMT",
+      "soil_hours_missing_or_incomplete": 0,
+      "soil_7_28_hours_missing_or_incomplete": 0
+    },
+    "08158000": {
+      "status": "success",
+      "rows": 3652,
+      "date_start": "2010-01-01",
+      "date_end": "2019-12-31",
+      "requested_coordinates": [
+        30.24613888888889,
+        -97.68005555555555
+      ],
+      "weather_grid_coordinates": [
+        30.25,
+        -97.75
+      ],
+      "model": "ERA5",
+      "timezone": "GMT",
+      "soil_hours_missing_or_incomplete": 0,
+      "soil_7_28_hours_missing_or_incomplete": 0
+    },
+    "11447650": {
+      "status": "success",
+      "rows": 3652,
+      "date_start": "2010-01-01",
+      "date_end": "2019-12-31",
+      "requested_coordinates": [
+        38.4556638888889,
+        -121.501616666667
+      ],
+      "weather_grid_coordinates": [
+        38.5,
+        -121.5
+      ],
+      "model": "ERA5",
+      "timezone": "GMT",
+      "soil_hours_missing_or_incomplete": 0,
+      "soil_7_28_hours_missing_or_incomplete": 0
+    }
+  }
+}

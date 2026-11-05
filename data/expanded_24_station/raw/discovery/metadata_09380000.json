@@ -1,0 +1,101 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "USGS-09380000",
+        "agency_code": "USGS",
+        "agency_name": "U.S. Geological Survey",
+        "monitoring_location_number": "09380000",
+        "monitoring_location_name": "COLORADO RIVER AT LEES FERRY, AZ",
+        "district_code": "04",
+        "country_code": "US",
+        "country_name": "United States of America",
+        "state_code": "04",
+        "state_name": "Arizona",
+        "county_code": "005",
+        "county_name": "Coconino County",
+        "minor_civil_division_code": "93519",
+        "site_type_code": "ST",
+        "site_type": "Stream",
+        "hydrologic_unit_code": "140700061105",
+        "basin_code": null,
+        "altitude": 3109.13,
+        "altitude_accuracy": 0.09,
+        "altitude_method_code": "X",
+        "altitude_method_name": "GNSS2 - Level 2 Quality Survey Grade Global Navigation Satellite System",
+        "vertical_datum": "NAVD88",
+        "vertical_datum_name": "North American Vertical Datum of 1988",
+        "horizontal_positional_accuracy_code": "5",
+        "horizontal_positional_accuracy": "Accurate to + or - .5 sec (PLGR/PPS GPS).",
+        "horizontal_position_method_code": "N",
+        "horizontal_position_method_name": "Interpolated from digital map",
+        "original_horizontal_datum": "NAD83",
+        "original_horizontal_datum_name": "North American Datum of 1983",
+        "drainage_area": 111800.0,
+        "contributing_drainage_area": null,
+        "time_zone_abbreviation": "MST",
+        "uses_daylight_savings": "N",
+        "construction_date": null,
+        "aquifer_code": null,
+        "national_aquifer_code": null,
+        "aquifer_type_code": null,
+        "well_constructed_depth": null,
+        "hole_constructed_depth": null,
+        "depth_source_code": null,
+        "revision_note": "WSP 859:  1921-23.  WSP 1313:  1914-21.\n&lt;p&gt;The maximum discharge and date of the peak for water year 1884 were revised on May 30, 2024. The original USGS estimate was incorrectly revised to 300,000 ft&lt;sup&gt;3&lt;/sup&gt;/s in 1938. This revision is rescinded as of May 30, 2024. The month and day of the event were also removed, as there are contradicting reports and no clear evidence for a specific date. &lt;span&gt;&nbsp;&lt;/span&gt;&lt;/p&gt;\n&lt;p&gt;The maximum discharge for water year 1921 was revised on May 30, 2024. The original USGS estimate was incorrectly revised to 220,000 ft&lt;sup&gt;3&lt;/sup&gt;/s in 1938. This revision is rescinded as of May 30, 2024.&lt;/p&gt;\n&lt;p&gt;See USGS Professional Paper 1677 for additional information about the 1884 and 1921 water year peaks.&lt;/p&gt;",
+        "revision_created": "2017-11-13T06:00:00+00:00",
+        "revision_modified": "2024-05-30T20:06:20.047000+00:00"
+      },
+      "id": "USGS-09380000",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -111.58787222222222,
+          36.864333333333335
+        ]
+      }
+    }
+  ],
+  "numberReturned": 1,
+  "links": [
+    {
+      "type": "application/geo+json",
+      "rel": "self",
+      "title": "This document as GeoJSON",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&limit=1&id=USGS-09380000"
+    },
+    {
+      "rel": "alternate",
+      "type": "application/ld+json",
+      "title": "This document as RDF (JSON-LD)",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=jsonld&limit=1&id=USGS-09380000"
+    },
+    {
+      "type": "text/html",
+      "rel": "alternate",
+      "title": "This document as HTML",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=html&limit=1&id=USGS-09380000"
+    },
+    {
+      "type": "text/csv; charset=utf-8",
+      "rel": "alternate",
+      "title": "This document as CSV",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=csv&limit=1&id=USGS-09380000"
+    },
+    {
+      "type": "application/geo+json",
+      "rel": "next",
+      "title": "Items (next)",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&offset=1&limit=1&id=USGS-09380000"
+    },
+    {
+      "type": "application/json",
+      "title": "Monitoring locations",
+      "rel": "collection",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations"
+    }
+  ],
+  "timeStamp": "2026-11-05T03:04:42.618877Z"
+}

@@ -1,0 +1,101 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "USGS-01200000",
+        "agency_code": "USGS",
+        "agency_name": "U.S. Geological Survey",
+        "monitoring_location_number": "01200000",
+        "monitoring_location_name": "TENMILE RIVER NEAR GAYLORDSVILLE, CT",
+        "district_code": "09",
+        "country_code": "US",
+        "country_name": "United States of America",
+        "state_code": "36",
+        "state_name": "New York",
+        "county_code": "027",
+        "county_name": "Dutchess County",
+        "minor_civil_division_code": "20819",
+        "site_type_code": "ST",
+        "site_type": "Stream",
+        "hydrologic_unit_code": "011000050506",
+        "basin_code": null,
+        "altitude": 304.0,
+        "altitude_accuracy": 5.0,
+        "altitude_method_code": "M",
+        "altitude_method_name": "Interpolated from topographic map.",
+        "vertical_datum": "NGVD29",
+        "vertical_datum_name": "National Geodetic Vertical Datum of 1929",
+        "horizontal_positional_accuracy_code": "H",
+        "horizontal_positional_accuracy": "Accurate to + or - .01 sec (Differentially-Corrected GPS).",
+        "horizontal_position_method_code": "N",
+        "horizontal_position_method_name": "Interpolated from digital map",
+        "original_horizontal_datum": "NAD83",
+        "original_horizontal_datum_name": "North American Datum of 1983",
+        "drainage_area": 203.0,
+        "contributing_drainage_area": 203.0,
+        "time_zone_abbreviation": "EST",
+        "uses_daylight_savings": "Y",
+        "construction_date": null,
+        "aquifer_code": null,
+        "national_aquifer_code": null,
+        "aquifer_type_code": null,
+        "well_constructed_depth": null,
+        "hole_constructed_depth": null,
+        "depth_source_code": null,
+        "revision_note": "WSP 1201: 1939. WSP 1701: 1955-1957 (M), 1958-59. WSP 1901: Drainage area. WDR US-2013-1: Datum of gage.",
+        "revision_created": "2017-11-13T06:00:00+00:00",
+        "revision_modified": null
+      },
+      "id": "USGS-01200000",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.52868333333333,
+          41.658763888888885
+        ]
+      }
+    }
+  ],
+  "numberReturned": 1,
+  "links": [
+    {
+      "type": "application/geo+json",
+      "rel": "self",
+      "title": "This document as GeoJSON",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&limit=1&id=USGS-01200000"
+    },
+    {
+      "rel": "alternate",
+      "type": "application/ld+json",
+      "title": "This document as RDF (JSON-LD)",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=jsonld&limit=1&id=USGS-01200000"
+    },
+    {
+      "type": "text/html",
+      "rel": "alternate",
+      "title": "This document as HTML",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=html&limit=1&id=USGS-01200000"
+    },
+    {
+      "type": "text/csv; charset=utf-8",
+      "rel": "alternate",
+      "title": "This document as CSV",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=csv&limit=1&id=USGS-01200000"
+    },
+    {
+      "type": "application/geo+json",
+      "rel": "next",
+      "title": "Items (next)",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&offset=1&limit=1&id=USGS-01200000"
+    },
+    {
+      "type": "application/json",
+      "title": "Monitoring locations",
+      "rel": "collection",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations"
+    }
+  ],
+  "timeStamp": "2026-11-05T03:01:26.210010Z"
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "retrieved_at_utc": "2026-11-05T01:54:28.482352+00:00",
+    "source": "USGS SS-Hydro",
+    "station_id": "08158000",
+    "url": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+    "http_status": null,
+    "attempt": 1,
+    "error": "('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))",
+    "response_excerpt": ""
+  }
+]

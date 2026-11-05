@@ -1,0 +1,101 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "USGS-02489500",
+        "agency_code": "USGS",
+        "agency_name": "U.S. Geological Survey",
+        "monitoring_location_number": "02489500",
+        "monitoring_location_name": "Pearl River near Bogalusa, LA",
+        "district_code": "22",
+        "country_code": "US",
+        "country_name": "United States of America",
+        "state_code": "22",
+        "state_name": "Louisiana",
+        "county_code": "117",
+        "county_name": "Washington Parish",
+        "minor_civil_division_code": null,
+        "site_type_code": "ST",
+        "site_type": "Stream",
+        "hydrologic_unit_code": "031800040604",
+        "basin_code": null,
+        "altitude": 54.64,
+        "altitude_accuracy": 0.16,
+        "altitude_method_code": "R",
+        "altitude_method_name": "Reported method of determination.",
+        "vertical_datum": "NAVD88",
+        "vertical_datum_name": "North American Vertical Datum of 1988",
+        "horizontal_positional_accuracy_code": "U",
+        "horizontal_positional_accuracy": "Unknown or unspecified.",
+        "horizontal_position_method_code": "M",
+        "horizontal_position_method_name": "Interpolated from MAP.",
+        "original_horizontal_datum": "NAD27",
+        "original_horizontal_datum_name": "North American Datum of 1927",
+        "drainage_area": 6573.0,
+        "contributing_drainage_area": null,
+        "time_zone_abbreviation": "CST",
+        "uses_daylight_savings": "Y",
+        "construction_date": null,
+        "aquifer_code": null,
+        "national_aquifer_code": null,
+        "aquifer_type_code": null,
+        "well_constructed_depth": null,
+        "hole_constructed_depth": null,
+        "depth_source_code": null,
+        "revision_note": "WRD LA-1981-2: Drainage area.&nbsp;&lt;span style=\"font-size: 12pt; font-family: 'Segoe UI', sans-serif; line-height: 115%;\"&gt;pH daily mean published in error for June 06, 1975 - Sep. 30, 1980.&lt;/span&gt;",
+        "revision_created": "2017-11-13T06:00:00+00:00",
+        "revision_modified": "2025-09-29T15:23:36.437000+00:00"
+      },
+      "id": "USGS-02489500",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -89.82091172465037,
+          30.79326141613656
+        ]
+      }
+    }
+  ],
+  "numberReturned": 1,
+  "links": [
+    {
+      "type": "application/geo+json",
+      "rel": "self",
+      "title": "This document as GeoJSON",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&limit=1&id=USGS-02489500"
+    },
+    {
+      "rel": "alternate",
+      "type": "application/ld+json",
+      "title": "This document as RDF (JSON-LD)",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=jsonld&limit=1&id=USGS-02489500"
+    },
+    {
+      "type": "text/html",
+      "rel": "alternate",
+      "title": "This document as HTML",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=html&limit=1&id=USGS-02489500"
+    },
+    {
+      "type": "text/csv; charset=utf-8",
+      "rel": "alternate",
+      "title": "This document as CSV",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=csv&limit=1&id=USGS-02489500"
+    },
+    {
+      "type": "application/geo+json",
+      "rel": "next",
+      "title": "Items (next)",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&offset=1&limit=1&id=USGS-02489500"
+    },
+    {
+      "type": "application/json",
+      "title": "Monitoring locations",
+      "rel": "collection",
+      "href": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations"
+    }
+  ],
+  "timeStamp": "2026-11-05T03:02:46.212811Z"
+}

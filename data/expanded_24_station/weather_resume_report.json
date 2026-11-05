@@ -1,0 +1,170 @@
+{
+  "source": "Open-Meteo Historical Archive ERA5",
+  "requested_station_ids": [
+    "02176930",
+    "02228500",
+    "02339495",
+    "02489500",
+    "04010500",
+    "04024430",
+    "04031000",
+    "05387440",
+    "06614800",
+    "07047855",
+    "09380000",
+    "10039500",
+    "11501000"
+  ],
+  "successful_station_ids": [
+    "02176930",
+    "02228500",
+    "02339495",
+    "02489500",
+    "04010500",
+    "04024430",
+    "04031000",
+    "05387440",
+    "06614800",
+    "07047855",
+    "09380000",
+    "10039500",
+    "11501000"
+  ],
+  "request_log": [
+    {
+      "station_id": "02176930",
+      "time_utc": "2026-11-05T03:45:41.275997+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=34.9745277777778&longitude=-83.1161666666667&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2836045
+    },
+    {
+      "station_id": "02228500",
+      "time_utc": "2026-11-05T03:45:51.174870+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=30.5177312477545&longitude=-82.230395353296&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2837372
+    },
+    {
+      "station_id": "02339495",
+      "time_utc": "2026-11-05T03:46:00.593915+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=32.9015159279019&longitude=-85.1963307982894&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2836749
+    },
+    {
+      "station_id": "02489500",
+      "time_utc": "2026-11-05T03:46:08.105537+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=30.79326141613656&longitude=-89.82091172465037&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2837308
+    },
+    {
+      "station_id": "04010500",
+      "time_utc": "2026-11-05T03:46:12.180692+00:00",
+      "status": 429,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=48.01222239451506&longitude=-89.61620396811408&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 94
+    },
+    {
+      "station_id": "04010500",
+      "time_utc": "2026-11-05T03:47:19.255925+00:00",
+      "status": 200,
+      "attempt": 2,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=48.01222239451506&longitude=-89.61620396811408&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2836895
+    },
+    {
+      "station_id": "04024430",
+      "time_utc": "2026-11-05T03:47:26.519981+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=46.63333333333333&longitude=-92.09388888888888&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2836533
+    },
+    {
+      "station_id": "04031000",
+      "time_utc": "2026-11-05T03:47:35.068836+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=46.511336116045&longitude=-90.0746179337142&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2836944
+    },
+    {
+      "station_id": "05387440",
+      "time_utc": "2026-11-05T03:48:40.973182+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=43.406913160576&longitude=-91.8990464335351&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2836759
+    },
+    {
+      "station_id": "06614800",
+      "time_utc": "2026-11-05T03:48:48.037911+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=40.496111&longitude=-105.864444&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2836793
+    },
+    {
+      "station_id": "07047855",
+      "time_utc": "2026-11-05T03:48:55.310991+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=35.8086111111111&longitude=-90.6422222222222&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2836383
+    },
+    {
+      "station_id": "09380000",
+      "time_utc": "2026-11-05T03:49:02.482610+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=36.864333333333335&longitude=-111.58787222222222&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2835929
+    },
+    {
+      "station_id": "10039500",
+      "time_utc": "2026-11-05T03:49:06.962764+00:00",
+      "status": 429,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=42.2110433789753&longitude=-111.053802247823&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 94
+    },
+    {
+      "station_id": "10039500",
+      "time_utc": "2026-11-05T03:50:16.299087+00:00",
+      "status": 200,
+      "attempt": 2,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=42.2110433789753&longitude=-111.053802247823&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2835050
+    },
+    {
+      "station_id": "11501000",
+      "time_utc": "2026-11-05T03:50:25.307024+00:00",
+      "status": 200,
+      "attempt": 1,
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=42.5843055555556&longitude=-121.848333333333&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "response_bytes": 2833716
+    }
+  ],
+  "retry_failures": [
+    {
+      "station_id": "04010500",
+      "status": 429,
+      "response": "{\"error\":true,\"reason\":\"Minutely API request limit exceeded. Please try again in one minute.\"}",
+      "attempt": 1
+    },
+    {
+      "station_id": "10039500",
+      "status": 429,
+      "response": "{\"error\":true,\"reason\":\"Minutely API request limit exceeded. Please try again in one minute.\"}",
+      "attempt": 1
+    }
+  ],
+  "completed_at_utc": "2026-11-05T03:50:27.391171+00:00"
+}

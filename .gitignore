@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+.venv/
+data/processed/*.csv
+reports/*.csv
+reports/*.json
+predictions.csv
+models/*.joblib

@@ -1,0 +1,4 @@
+experiment,description,overall_rmse,extreme_rmse,mae,r2,local_weighted_score_0_100
+specific_baseline,Specific discharge Q/A with the current fixed HGB/CatBoost/LightGBM blend,128111.2434914391,234625.02935550368,61701.6536329691,0.02857523930477912,22.472970795774955
+log_specific,log1p(Q/A) with the same fixed HGB/CatBoost/LightGBM blend,127631.29817596682,240363.64242928647,61898.69479094858,0.035840135444340504,7.123941225908095
+specific_catboost,Specific discharge Q/A with CatBoost only,124734.98842212305,231495.76807247094,60610.53047595139,0.07910257644468466,100.0

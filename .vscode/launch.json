@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "FLOODCAST V2: train, validate, and predict",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/solution.py",
+      "console": "integratedTerminal",
+      "args": ["--target-mode", "specific_discharge"],
+      "justMyCode": true
+    }
+  ]
+}

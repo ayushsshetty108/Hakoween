@@ -1,0 +1,39 @@
+{
+  "created_utc": "2026-11-04T18:09:48.553319+00:00",
+  "train_date_range": [
+    "2010-01-01",
+    "2018-12-31"
+  ],
+  "test_date_range": [
+    "2019-01-01",
+    "2019-12-31"
+  ],
+  "train_station_ids": [
+    "01646500",
+    "07010000",
+    "08158000",
+    "02087500"
+  ],
+  "test_station_ids": [
+    "11447650"
+  ],
+  "test_discharge_requested": false,
+  "sources": {
+    "discharge_and_station_metadata": "USGS Water Data OGC API v1",
+    "weather": "NASA POWER Daily API (MERRA-2; GWETTOP soil wetness fraction)",
+    "basin_attributes": "USGS StreamStats SS-Delineate and SS-Hydro APIs"
+  },
+  "weather_fallback_reason": "NASA POWER selected by configuration or reused from complete cache",
+  "rows": {
+    "train": 13147,
+    "test": 365,
+    "feature_context": 18260
+  },
+  "missing_basin_attributes": {
+    "01646500": "ELEV;FOREST",
+    "07010000": "ELEV;SLOPE_PCT;FOREST",
+    "08158000": "ELEV;SLOPE_PCT;FOREST",
+    "02087500": "SLOPE_PCT;FOREST",
+    "11447650": "SLOPE_PCT"
+  }
+}

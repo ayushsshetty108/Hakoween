@@ -1,0 +1,20 @@
+{
+  "source": "Open-Meteo Historical Archive ERA5",
+  "transient_rate_limit_responses": [
+    {
+      "station_id": "04010500",
+      "status": 429,
+      "response": "{\"error\":true,\"reason\":\"Minutely API request limit exceeded. Please try again in one minute.\"}",
+      "attempt": 1
+    },
+    {
+      "station_id": "10039500",
+      "status": 429,
+      "response": "{\"error\":true,\"reason\":\"Minutely API request limit exceeded. Please try again in one minute.\"}",
+      "attempt": 1
+    }
+  ],
+  "recovered": true,
+  "terminal_failures": [],
+  "note": "Each station subsequently returned a successful saved response; no weather measurements were substituted."
+}

@@ -1,0 +1,949 @@
+{
+  "project": "FLOODCAST V2",
+  "started_at_utc": "2026-11-05T01:49:35.072829+00:00",
+  "input_station_ids_from_train_csv": [
+    "01646500",
+    "02087500",
+    "07010000",
+    "08158000"
+  ],
+  "input_station_ids_from_test_csv": [
+    "11447650"
+  ],
+  "weather_date_range": [
+    "2010-01-01",
+    "2019-12-31"
+  ],
+  "train_date_range_by_station": {
+    "01646500": [
+      "2010-01-01",
+      "2018-12-31"
+    ],
+    "02087500": [
+      "2010-01-01",
+      "2018-12-31"
+    ],
+    "07010000": [
+      "2010-01-01",
+      "2018-12-31"
+    ],
+    "08158000": [
+      "2010-01-01",
+      "2018-12-31"
+    ]
+  },
+  "test_date_range_by_station": {
+    "11447650": [
+      "2019-01-01",
+      "2019-12-31"
+    ]
+  },
+  "usgs_discharge_policy": "Only station IDs/dates present in train.csv are requested; test station discharge is never requested.",
+  "openmeteo_model": "ERA5; a single consistent model is used because official Open-Meteo docs list precipitation unavailable for ERA5-Land while soil moisture is available for ERA5.",
+  "streamstats_services": {
+    "delineation": "https://streamstats.usgs.gov/ss-delineate/v1/delineate/sshydro",
+    "basin_characteristics": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+    "national_streamflow_statistics": "Investigated; not used because this acquisition requests measured discharge and catchment attributes, not regression-estimated flow statistics."
+  },
+  "sources": {
+    "usgs_station_metadata": {
+      "api": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items",
+      "retrieved_at_utc": "2026-11-05T01:49:58.303037+00:00",
+      "rows": 5,
+      "stations": [
+        "01646500",
+        "02087500",
+        "07010000",
+        "08158000",
+        "11447650"
+      ],
+      "missing_counts": {
+        "station_id": 0,
+        "station_name": 0,
+        "latitude": 0,
+        "longitude": 0,
+        "state": 0,
+        "state_code": 0,
+        "county": 0,
+        "huc": 0,
+        "drainage_area_sqmi": 1,
+        "contributing_drainage_area_sqmi": 4,
+        "usgs_altitude_m": 1,
+        "usgs_altitude_unit": 1,
+        "metadata_status": 0
+      }
+    },
+    "usgs_daily_discharge": {
+      "api": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items",
+      "retrieved_at_utc": "2026-11-05T01:50:17.765133+00:00",
+      "parameter_code": "00060",
+      "statistic_id": "00003",
+      "expected_units": "ft^3/s (cfs)",
+      "requested_stations": [
+        "01646500",
+        "02087500",
+        "07010000",
+        "08158000"
+      ],
+      "test_station_ids_excluded": [
+        "11447650"
+      ],
+      "records": 13147,
+      "stations": {
+        "01646500": {
+          "status": "success",
+          "rows": 3287,
+          "date_start": "2010-01-01",
+          "date_end": "2018-12-31",
+          "pages": 1
+        },
+        "02087500": {
+          "status": "success",
+          "rows": 3287,
+          "date_start": "2010-01-01",
+          "date_end": "2018-12-31",
+          "pages": 1
+        },
+        "07010000": {
+          "status": "success",
+          "rows": 3287,
+          "date_start": "2010-01-01",
+          "date_end": "2018-12-31",
+          "pages": 1
+        },
+        "08158000": {
+          "status": "success",
+          "rows": 3286,
+          "date_start": "2010-01-01",
+          "date_end": "2018-12-31",
+          "pages": 1
+        }
+      },
+      "missing_values": 0,
+      "duplicate_station_date_rows": 0
+    },
+    "openmeteo_weather": {
+      "api": "https://archive-api.open-meteo.com/v1/archive",
+      "retrieved_at_utc": "2026-11-05T02:03:32.369375+00:00",
+      "model": "ERA5",
+      "timezone": "UTC",
+      "requested_date_range": [
+        "2010-01-01",
+        "2019-12-31"
+      ],
+      "records": 18260,
+      "stations": {
+        "01646500": {
+          "status": "success",
+          "rows": 3652,
+          "date_start": "2010-01-01",
+          "date_end": "2019-12-31",
+          "requested_coordinates": [
+            38.949777777777776,
+            -77.12763888888888
+          ],
+          "weather_grid_coordinates": [
+            39.0,
+            -77.25
+          ],
+          "model": "ERA5",
+          "timezone": "GMT",
+          "soil_hours_missing_or_incomplete": 0,
+          "soil_7_28_hours_missing_or_incomplete": 0
+        },
+        "02087500": {
+          "status": "success",
+          "rows": 3652,
+          "date_start": "2010-01-01",
+          "date_end": "2019-12-31",
+          "requested_coordinates": [
+            35.6472222222222,
+            -78.4052777777778
+          ],
+          "weather_grid_coordinates": [
+            35.75,
+            -78.5
+          ],
+          "model": "ERA5",
+          "timezone": "GMT",
+          "soil_hours_missing_or_incomplete": 0,
+          "soil_7_28_hours_missing_or_incomplete": 0
+        },
+        "07010000": {
+          "status": "success",
+          "rows": 3652,
+          "date_start": "2010-01-01",
+          "date_end": "2019-12-31",
+          "requested_coordinates": [
+            38.629,
+            -90.1797777777778
+          ],
+          "weather_grid_coordinates": [
+            38.75,
+            -90.25
+          ],
+          "model": "ERA5",
+          "timezone": "GMT",
+          "soil_hours_missing_or_incomplete": 0,
+          "soil_7_28_hours_missing_or_incomplete": 0
+        },
+        "08158000": {
+          "status": "success",
+          "rows": 3652,
+          "date_start": "2010-01-01",
+          "date_end": "2019-12-31",
+          "requested_coordinates": [
+            30.24613888888889,
+            -97.68005555555555
+          ],
+          "weather_grid_coordinates": [
+            30.25,
+            -97.75
+          ],
+          "model": "ERA5",
+          "timezone": "GMT",
+          "soil_hours_missing_or_incomplete": 0,
+          "soil_7_28_hours_missing_or_incomplete": 0
+        },
+        "11447650": {
+          "status": "success",
+          "rows": 3652,
+          "date_start": "2010-01-01",
+          "date_end": "2019-12-31",
+          "requested_coordinates": [
+            38.4556638888889,
+            -121.501616666667
+          ],
+          "weather_grid_coordinates": [
+            38.5,
+            -121.5
+          ],
+          "model": "ERA5",
+          "timezone": "GMT",
+          "soil_hours_missing_or_incomplete": 0,
+          "soil_7_28_hours_missing_or_incomplete": 0
+        }
+      },
+      "missing_values": {
+        "station_id": 0,
+        "date": 0,
+        "precipitation_mm": 0,
+        "temp_max_c": 0,
+        "temp_min_c": 0,
+        "temp_mean_c": 0,
+        "soil_moisture_0_7cm": 0,
+        "soil_moisture_7_28cm": 0
+      },
+      "units": {
+        "precipitation_mm": "mm/day",
+        "temp_max_c": "\u00b0C",
+        "temp_min_c": "\u00b0C",
+        "temp_mean_c": "\u00b0C",
+        "soil_moisture_0_7cm": "m\u00b3/m\u00b3 daily mean of 24 hourly values",
+        "soil_moisture_7_28cm": "m\u00b3/m\u00b3 daily mean of 24 hourly values; null if unavailable"
+      }
+    },
+    "streamstats_catchment": {
+      "services": {
+        "delineation": "https://streamstats.usgs.gov/ss-delineate/v1/delineate/sshydro",
+        "hydro": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate"
+      },
+      "retrieved_at_utc": "2026-11-05T01:55:31.479034+00:00",
+      "stations": {
+        "01646500": {
+          "status": "unverified: SS-Delineate warning: Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.; SS-Hydro did not return a valid drainage area for station verification",
+          "region": "MD",
+          "input_coordinate": [
+            -77.12763888888888,
+            38.949777777777776
+          ],
+          "returned_huc": "02070008",
+          "usgs_huc": "020700081005",
+          "input_coordinate_inside_basin": true,
+          "snapped_point_distance_m": 4.346677427261267,
+          "warning": "Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.",
+          "verification_reasons": [
+            "SS-Delineate warning: Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.",
+            "SS-Hydro did not return a valid drainage area for station verification"
+          ]
+        },
+        "02087500": {
+          "status": "verified",
+          "region": "NC",
+          "input_coordinate": [
+            -78.4052777777778,
+            35.6472222222222
+          ],
+          "returned_huc": "03020201",
+          "usgs_huc": "03020201",
+          "input_coordinate_inside_basin": true,
+          "snapped_point_distance_m": 38.57982169484878,
+          "warning": "",
+          "verification_reasons": []
+        },
+        "07010000": {
+          "status": "unverified: SS-Delineate warning: Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.; SS-Hydro did not return a valid drainage area for station verification",
+          "region": "MO",
+          "input_coordinate": [
+            -90.1797777777778,
+            38.629
+          ],
+          "returned_huc": "07140101",
+          "usgs_huc": "071401010403",
+          "input_coordinate_inside_basin": true,
+          "snapped_point_distance_m": 2.272562797561001,
+          "warning": "Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.",
+          "verification_reasons": [
+            "SS-Delineate warning: Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.",
+            "SS-Hydro did not return a valid drainage area for station verification"
+          ]
+        },
+        "08158000": {
+          "status": "unverified: SS-Delineate warning: Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.; Returned HUC 1209021499 does not match USGS HUC 120902050306; SS-Hydro did not return a valid drainage area for station verification",
+          "region": "TX",
+          "input_coordinate": [
+            -97.68005555555555,
+            30.24613888888889
+          ],
+          "returned_huc": "1209021499",
+          "usgs_huc": "120902050306",
+          "input_coordinate_inside_basin": true,
+          "snapped_point_distance_m": 1.856297649967679,
+          "warning": "Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.",
+          "verification_reasons": [
+            "SS-Delineate warning: Point not snappable using ss-pourpoint API service; results may be inaccurate. , Point not snappable using ss-pourpoint API service; results may be inaccurate.",
+            "Returned HUC 1209021499 does not match USGS HUC 120902050306",
+            "SS-Hydro did not return a valid drainage area for station verification"
+          ]
+        },
+        "11447650": {
+          "status": "verified",
+          "region": "CA",
+          "input_coordinate": [
+            -121.501616666667,
+            38.4556638888889
+          ],
+          "returned_huc": "UNIT_18B",
+          "usgs_huc": "180201630701",
+          "input_coordinate_inside_basin": true,
+          "snapped_point_distance_m": 23.28540553916974,
+          "warning": "peakflows not available in this area peakflows not available in this area",
+          "verification_reasons": []
+        }
+      },
+      "records": 5,
+      "missing_values": {
+        "station_id": 0,
+        "drainage_area_sqmi": 3,
+        "mean_basin_elevation_m": 4,
+        "slope_pct": 4,
+        "forest_cover_pct": 5,
+        "impervious_surface_pct": 3,
+        "mean_basin_elevation_source_code": 4,
+        "slope_source_code": 4,
+        "forest_source_code": 5,
+        "impervious_source_code": 3,
+        "delineation_verified": 0,
+        "delineation_status": 0,
+        "snapped_point_distance_m": 0,
+        "returned_huc": 0,
+        "huc_verification_note": 0,
+        "drainage_area_sqmi_missing_reason": 0,
+        "mean_basin_elevation_m_missing_reason": 0,
+        "slope_pct_missing_reason": 0,
+        "forest_cover_pct_missing_reason": 0,
+        "impervious_surface_pct_missing_reason": 0
+      },
+      "units": {
+        "drainage_area_sqmi": "square miles",
+        "mean_basin_elevation_m": "meters",
+        "slope_pct": "%",
+        "forest_cover_pct": "%",
+        "impervious_surface_pct": "%"
+      }
+    }
+  },
+  "existing_station_metadata_crosscheck": [
+    {
+      "station_id": "01646500",
+      "checks": {
+        "latitude": {
+          "input": 38.949777777777776,
+          "usgs": 38.949777777777776,
+          "matches_within_1e-5_deg": true
+        },
+        "longitude": {
+          "input": -77.12763888888888,
+          "usgs": -77.12763888888888,
+          "matches_within_1e-5_deg": true
+        },
+        "huc": {
+          "input": null,
+          "usgs": "020700081005",
+          "comparison_available": false,
+          "prefix_related": null
+        },
+        "state": {
+          "input": "Maryland",
+          "usgs": "Maryland",
+          "matches": true
+        },
+        "coordinate_pair_matches": true,
+        "existing_metadata_huc_field_available": false
+      }
+    },
+    {
+      "station_id": "07010000",
+      "checks": {
+        "latitude": {
+          "input": 38.629,
+          "usgs": 38.629,
+          "matches_within_1e-5_deg": true
+        },
+        "longitude": {
+          "input": -90.1797777777778,
+          "usgs": -90.1797777777778,
+          "matches_within_1e-5_deg": true
+        },
+        "huc": {
+          "input": null,
+          "usgs": "071401010403",
+          "comparison_available": false,
+          "prefix_related": null
+        },
+        "state": {
+          "input": "Missouri",
+          "usgs": "Missouri",
+          "matches": true
+        },
+        "coordinate_pair_matches": true,
+        "existing_metadata_huc_field_available": false
+      }
+    },
+    {
+      "station_id": "08158000",
+      "checks": {
+        "latitude": {
+          "input": 30.24613888888889,
+          "usgs": 30.24613888888889,
+          "matches_within_1e-5_deg": true
+        },
+        "longitude": {
+          "input": -97.68005555555555,
+          "usgs": -97.68005555555555,
+          "matches_within_1e-5_deg": true
+        },
+        "huc": {
+          "input": null,
+          "usgs": "120902050306",
+          "comparison_available": false,
+          "prefix_related": null
+        },
+        "state": {
+          "input": "Texas",
+          "usgs": "Texas",
+          "matches": true
+        },
+        "coordinate_pair_matches": true,
+        "existing_metadata_huc_field_available": false
+      }
+    },
+    {
+      "station_id": "02087500",
+      "checks": {
+        "latitude": {
+          "input": 35.6472222222222,
+          "usgs": 35.6472222222222,
+          "matches_within_1e-5_deg": true
+        },
+        "longitude": {
+          "input": -78.4052777777778,
+          "usgs": -78.4052777777778,
+          "matches_within_1e-5_deg": true
+        },
+        "huc": {
+          "input": null,
+          "usgs": "03020201",
+          "comparison_available": false,
+          "prefix_related": null
+        },
+        "state": {
+          "input": "North Carolina",
+          "usgs": "North Carolina",
+          "matches": true
+        },
+        "coordinate_pair_matches": true,
+        "existing_metadata_huc_field_available": false
+      }
+    },
+    {
+      "station_id": "11447650",
+      "checks": {
+        "latitude": {
+          "input": 38.4556638888889,
+          "usgs": 38.4556638888889,
+          "matches_within_1e-5_deg": true
+        },
+        "longitude": {
+          "input": -121.501616666667,
+          "usgs": -121.501616666667,
+          "matches_within_1e-5_deg": true
+        },
+        "huc": {
+          "input": null,
+          "usgs": "180201630701",
+          "comparison_available": false,
+          "prefix_related": null
+        },
+        "state": {
+          "input": "California",
+          "usgs": "California",
+          "matches": true
+        },
+        "coordinate_pair_matches": true,
+        "existing_metadata_huc_field_available": false
+      }
+    }
+  ],
+  "integration": {
+    "status": "ready",
+    "weather_rows": 18260,
+    "discharge_rows": 13147,
+    "integrated_rows": 18260,
+    "rows_with_discharge": 13147,
+    "rows_without_discharge": 5113,
+    "missing_value_counts": {
+      "station_id": 0,
+      "date": 0,
+      "precipitation_mm": 0,
+      "temp_max_c": 0,
+      "temp_min_c": 0,
+      "temp_mean_c": 0,
+      "soil_moisture_0_7cm": 0,
+      "soil_moisture_7_28cm": 0,
+      "discharge_cfs": 5113,
+      "drainage_area_sqmi": 10956,
+      "mean_basin_elevation_m": 14608,
+      "slope_pct": 14608,
+      "forest_cover_pct": 18260,
+      "impervious_surface_pct": 10956,
+      "mean_basin_elevation_source_code": 14608,
+      "slope_source_code": 14608,
+      "forest_source_code": 18260,
+      "impervious_source_code": 10956,
+      "delineation_verified": 0,
+      "delineation_status": 0,
+      "snapped_point_distance_m": 0,
+      "returned_huc": 0,
+      "huc_verification_note": 0,
+      "drainage_area_sqmi_missing_reason": 7304,
+      "mean_basin_elevation_m_missing_reason": 3652,
+      "slope_pct_missing_reason": 3652,
+      "forest_cover_pct_missing_reason": 0,
+      "impervious_surface_pct_missing_reason": 7304
+    },
+    "duplicate_station_date_rows": 0,
+    "weather_rows_without_discharge_match": 5113,
+    "weather_station_ids": [
+      "01646500",
+      "02087500",
+      "07010000",
+      "08158000",
+      "11447650"
+    ],
+    "discharge_station_ids": [
+      "01646500",
+      "02087500",
+      "07010000",
+      "08158000"
+    ],
+    "catchment_verified_stations": [
+      "02087500",
+      "11447650"
+    ],
+    "unverified_catchment_station_ids": [
+      "01646500",
+      "07010000",
+      "08158000"
+    ]
+  },
+  "http_requests": [
+    {
+      "retrieved_at_utc": "2026-11-05T01:49:39.050781+00:00",
+      "source": "USGS monitoring locations",
+      "station_id": "01646500",
+      "method": "GET",
+      "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&limit=1&id=USGS-01646500",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 4584,
+      "elapsed_seconds": 3.971
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:49:43.679050+00:00",
+      "source": "USGS monitoring locations",
+      "station_id": "02087500",
+      "method": "GET",
+      "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&limit=1&id=USGS-02087500",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 3748,
+      "elapsed_seconds": 4.424
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:49:48.540423+00:00",
+      "source": "USGS monitoring locations",
+      "station_id": "07010000",
+      "method": "GET",
+      "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&limit=1&id=USGS-07010000",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 3672,
+      "elapsed_seconds": 4.654
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:49:53.174853+00:00",
+      "source": "USGS monitoring locations",
+      "station_id": "08158000",
+      "method": "GET",
+      "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&limit=1&id=USGS-08158000",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 4581,
+      "elapsed_seconds": 4.427
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:49:58.064970+00:00",
+      "source": "USGS monitoring locations",
+      "station_id": "11447650",
+      "method": "GET",
+      "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/monitoring-locations/items?f=json&limit=1&id=USGS-11447650",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 3616,
+      "elapsed_seconds": 4.684
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:04.506431+00:00",
+      "source": "USGS daily discharge",
+      "station_id": "01646500",
+      "method": "GET",
+      "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?f=json&limit=10000&monitoring_location_id=USGS-01646500&parameter_code=00060&statistic_id=00003&datetime=2010-01-01%2F2018-12-31",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2197320,
+      "elapsed_seconds": 6.197
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:09.720251+00:00",
+      "source": "USGS daily discharge",
+      "station_id": "02087500",
+      "method": "GET",
+      "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?f=json&limit=10000&monitoring_location_id=USGS-02087500&parameter_code=00060&statistic_id=00003&datetime=2010-01-01%2F2018-12-31",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2182875,
+      "elapsed_seconds": 4.566
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:13.610177+00:00",
+      "source": "USGS daily discharge",
+      "station_id": "07010000",
+      "method": "GET",
+      "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?f=json&limit=10000&monitoring_location_id=USGS-07010000&parameter_code=00060&statistic_id=00003&datetime=2010-01-01%2F2018-12-31",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2158821,
+      "elapsed_seconds": 3.262
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:17.114838+00:00",
+      "source": "USGS daily discharge",
+      "station_id": "08158000",
+      "method": "GET",
+      "url": "https://api.waterdata.usgs.gov/ogcapi/v1/collections/daily/items?f=json&limit=10000&monitoring_location_id=USGS-08158000&parameter_code=00060&statistic_id=00003&datetime=2010-01-01%2F2018-12-31",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2190173,
+      "elapsed_seconds": 2.884
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:20.267424+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "01646500",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=38.949777777777776&longitude=-77.12763888888888&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2309834,
+      "elapsed_seconds": 2.497
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:25.639033+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "02087500",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=35.6472222222222&longitude=-78.4052777777778&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2310407,
+      "elapsed_seconds": 4.271
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:29.019276+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "07010000",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=38.629&longitude=-90.1797777777778&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2310189,
+      "elapsed_seconds": 2.277
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:33.434770+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "08158000",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=30.24613888888889&longitude=-97.68005555555555&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2311180,
+      "elapsed_seconds": 2.776
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:44.432366+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "11447650",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=38.4556638888889&longitude=-121.501616666667&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2310647,
+      "elapsed_seconds": 2.96
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:52.619132+00:00",
+      "source": "USGS SS-Delineate",
+      "station_id": "01646500",
+      "method": "GET",
+      "url": "https://streamstats.usgs.gov/ss-delineate/v1/delineate/sshydro/MD?lat=38.949777777777776&lon=-77.12763888888888",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 969,
+      "elapsed_seconds": 7.487
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:50:57.340854+00:00",
+      "source": "USGS SS-Hydro",
+      "station_id": "01646500",
+      "method": "POST",
+      "url": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2882,
+      "elapsed_seconds": 4.517
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:51:09.422660+00:00",
+      "source": "USGS SS-Delineate",
+      "station_id": "02087500",
+      "method": "GET",
+      "url": "https://streamstats.usgs.gov/ss-delineate/v1/delineate/sshydro/NC?lat=35.6472222222222&lon=-78.4052777777778",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 1313686,
+      "elapsed_seconds": 11.876
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:52:52.539130+00:00",
+      "source": "USGS SS-Hydro",
+      "station_id": "02087500",
+      "method": "POST",
+      "url": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 13315,
+      "elapsed_seconds": 102.834
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:53:00.112426+00:00",
+      "source": "USGS SS-Delineate",
+      "station_id": "07010000",
+      "method": "GET",
+      "url": "https://streamstats.usgs.gov/ss-delineate/v1/delineate/sshydro/MO?lat=38.629&lon=-90.1797777777778",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 974,
+      "elapsed_seconds": 7.364
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:53:06.683042+00:00",
+      "source": "USGS SS-Hydro",
+      "station_id": "07010000",
+      "method": "POST",
+      "url": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 1702,
+      "elapsed_seconds": 6.357
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:53:29.394621+00:00",
+      "source": "USGS SS-Delineate",
+      "station_id": "08158000",
+      "method": "GET",
+      "url": "https://streamstats.usgs.gov/ss-delineate/v1/delineate/sshydro/TX?lat=30.24613888888889&lon=-97.68005555555555",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 976,
+      "elapsed_seconds": 22.504
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:54:28.482305+00:00",
+      "source": "USGS SS-Hydro",
+      "station_id": "08158000",
+      "method": "POST",
+      "url": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+      "http_status": null,
+      "attempt": 1,
+      "elapsed_seconds": 58.882,
+      "exception": "('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))"
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:54:58.096717+00:00",
+      "source": "USGS SS-Hydro",
+      "station_id": "08158000",
+      "method": "POST",
+      "url": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+      "http_status": 200,
+      "attempt": 2,
+      "response_bytes": 10895,
+      "elapsed_seconds": 28.614
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:55:11.369742+00:00",
+      "source": "USGS SS-Delineate",
+      "station_id": "11447650",
+      "method": "GET",
+      "url": "https://streamstats.usgs.gov/ss-delineate/v1/delineate/sshydro/CA?lat=38.4556638888889&lon=-121.501616666667",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 1846981,
+      "elapsed_seconds": 13.068
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T01:55:31.254580+00:00",
+      "source": "USGS SS-Hydro",
+      "station_id": "11447650",
+      "method": "POST",
+      "url": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 3525,
+      "elapsed_seconds": 19.561
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T02:03:00.084646+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "01646500",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=38.949777777777776&longitude=-77.12763888888888&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2835786,
+      "elapsed_seconds": 5.789
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T02:03:04.692610+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "02087500",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=35.6472222222222&longitude=-78.4052777777778&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2836359,
+      "elapsed_seconds": 3.315
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T02:03:12.167844+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "07010000",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=38.629&longitude=-90.1797777777778&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2836140,
+      "elapsed_seconds": 6.264
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T02:03:20.375177+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "08158000",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=30.24613888888889&longitude=-97.68005555555555&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2837132,
+      "elapsed_seconds": 7.021
+    },
+    {
+      "retrieved_at_utc": "2026-11-05T02:03:29.908173+00:00",
+      "source": "Open-Meteo Historical Archive",
+      "station_id": "11447650",
+      "method": "GET",
+      "url": "https://archive-api.open-meteo.com/v1/archive?latitude=38.4556638888889&longitude=-121.501616666667&start_date=2010-01-01&end_date=2019-12-31&daily=precipitation_sum%2Ctemperature_2m_max%2Ctemperature_2m_min%2Ctemperature_2m_mean&hourly=soil_moisture_0_to_7cm%2Csoil_moisture_7_to_28cm&timezone=UTC&models=era5",
+      "http_status": 200,
+      "attempt": 1,
+      "response_bytes": 2836598,
+      "elapsed_seconds": 8.279
+    }
+  ],
+  "failed_requests": [
+    {
+      "retrieved_at_utc": "2026-11-05T01:54:28.482352+00:00",
+      "source": "USGS SS-Hydro",
+      "station_id": "08158000",
+      "url": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+      "http_status": null,
+      "attempt": 1,
+      "error": "('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))",
+      "response_excerpt": ""
+    }
+  ],
+  "recovered_request_failures": [
+    {
+      "retrieved_at_utc": "2026-11-05T01:54:28.482352+00:00",
+      "source": "USGS SS-Hydro",
+      "station_id": "08158000",
+      "url": "https://streamstats.usgs.gov/ss-hydro/v1/basin-characteristics/calculate",
+      "http_status": null,
+      "attempt": 1,
+      "error": "('Connection aborted.', ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None))",
+      "response_excerpt": ""
+    }
+  ],
+  "terminal_failures": [],
+  "coverage_checks": {
+    "expected_training_station_date_keys": 13147,
+    "actual_training_discharge_rows": 13147,
+    "training_discharge_key_coverage_complete": true,
+    "expected_weather_station_daily_keys_over_contiguous_ranges": 18260,
+    "actual_weather_rows": 18260,
+    "weather_coverage_complete_for_contiguous_ranges": true,
+    "weather_missing_feature_counts": {
+      "station_id": 0,
+      "date": 0,
+      "precipitation_mm": 0,
+      "temp_max_c": 0,
+      "temp_min_c": 0,
+      "temp_mean_c": 0,
+      "soil_moisture_0_7cm": 0,
+      "soil_moisture_7_28cm": 0
+    },
+    "unmatched_test_weather_rows": 5113
+  },
+  "completed_at_utc": "2026-11-05T02:03:32.382343+00:00",
+  "training_ready": false,
+  "training_ready_reason": "Full-source training is not ready: verified catchments 2/5; unverified station IDs ['01646500', '07010000', '08158000']. USGS discharge and Open-Meteo weather coverage passed."
+}

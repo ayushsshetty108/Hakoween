@@ -1,0 +1,215 @@
+{
+  "scope": "isolated experiments; production model and predictions were not modified",
+  "fold_strategy": "LeaveOneGroupOut by station; identical fold indices for every experiment",
+  "fold_count": 4,
+  "held_out_station_per_fold": [
+    [
+      "01646500"
+    ],
+    [
+      "02087500"
+    ],
+    [
+      "07010000"
+    ],
+    [
+      "08158000"
+    ]
+  ],
+  "features": "same hydro_plus feature matrix for all candidates",
+  "target_configurations": {
+    "specific_baseline": "Q / drainage_area_sqmi",
+    "log_specific": "log1p(Q / drainage_area_sqmi); inverse expm1 then multiply by area",
+    "specific_catboost": "Q / drainage_area_sqmi"
+  },
+  "model_configurations": {
+    "specific_baseline": "fixed HGB/CatBoost/LightGBM blend, weights 50/35/15 in wet and dry regimes",
+    "log_specific": "same fixed HGB/CatBoost/LightGBM blend and weights",
+    "specific_catboost": "CatBoost only, using current CatBoost component hyperparameters"
+  },
+  "metric_weights": {
+    "overall_rmse": 0.4,
+    "extreme_rmse": 0.3,
+    "mae": 0.2,
+    "r2": 0.1
+  },
+  "metrics": {
+    "specific_baseline": {
+      "overall_rmse": 128111.2434914391,
+      "extreme_rmse": 234625.02935550368,
+      "mae": 61701.6536329691,
+      "r2": 0.02857523930477912
+    },
+    "log_specific": {
+      "overall_rmse": 127631.29817596682,
+      "extreme_rmse": 240363.64242928647,
+      "mae": 61898.69479094858,
+      "r2": 0.035840135444340504
+    },
+    "specific_catboost": {
+      "overall_rmse": 124734.98842212305,
+      "extreme_rmse": 231495.76807247094,
+      "mae": 60610.53047595139,
+      "r2": 0.07910257644468466
+    }
+  },
+  "local_normalization_bounds": {
+    "overall_rmse": {
+      "best": 124734.98842212305,
+      "worst": 128111.2434914391
+    },
+    "extreme_rmse": {
+      "best": 231495.76807247094,
+      "worst": 240363.64242928647
+    },
+    "mae": {
+      "best": 60610.53047595139,
+      "worst": 61898.69479094858
+    },
+    "r2": {
+      "best": 0.07910257644468466,
+      "worst": 0.02857523930477912
+    }
+  },
+  "local_weighted_scores": {
+    "specific_baseline": 22.472970795774955,
+    "log_specific": 7.123941225908095,
+    "specific_catboost": 100.0
+  },
+  "normalized_components": {
+    "specific_baseline": {
+      "overall_rmse": 0.0,
+      "extreme_rmse": 64.71238588729324,
+      "mae": 15.29627514793492,
+      "r2": 0.0
+    },
+    "log_specific": {
+      "overall_rmse": 14.215315656512624,
+      "extreme_rmse": 0.0,
+      "mae": 0.0,
+      "r2": 14.378149633030445
+    },
+    "specific_catboost": {
+      "overall_rmse": 100.0,
+      "extreme_rmse": 100.0,
+      "mae": 100.0,
+      "r2": 100.0
+    }
+  },
+  "score_note": "The 40/30/20/10 weights are preserved. Normalization uses only these three local candidates because official all-team best/worst values are unavailable; local scores are not official leaderboard scores.",
+  "fold_results": [
+    {
+      "fold": 1,
+      "held_out_stations": [
+        "01646500"
+      ],
+      "validation_rows": 3287,
+      "metrics": {
+        "specific_baseline": {
+          "overall_rmse": 15729.560582612456,
+          "extreme_rmse": 46244.9093836137,
+          "mae": 7526.860418150211,
+          "r2": 0.11101721197406589
+        },
+        "log_specific": {
+          "overall_rmse": 15991.6417031338,
+          "extreme_rmse": 47125.005740197616,
+          "mae": 7638.385317391961,
+          "r2": 0.08114650180745042
+        },
+        "specific_catboost": {
+          "overall_rmse": 17215.779824820464,
+          "extreme_rmse": 50042.219702019094,
+          "mae": 8823.897318341296,
+          "r2": -0.06491163270888012
+        }
+      }
+    },
+    {
+      "fold": 2,
+      "held_out_stations": [
+        "02087500"
+      ],
+      "validation_rows": 3287,
+      "metrics": {
+        "specific_baseline": {
+          "overall_rmse": 1077.4228319576162,
+          "extreme_rmse": 2347.9876620674054,
+          "mae": 652.7184360352921,
+          "r2": 0.26585853360799894
+        },
+        "log_specific": {
+          "overall_rmse": 1017.2500962606416,
+          "extreme_rmse": 2750.083368895998,
+          "mae": 568.867304781033,
+          "r2": 0.3455704742465525
+        },
+        "specific_catboost": {
+          "overall_rmse": 1050.893979754174,
+          "extreme_rmse": 2869.8983792675012,
+          "mae": 548.8030204516383,
+          "r2": 0.3015662553340883
+        }
+      }
+    },
+    {
+      "fold": 3,
+      "held_out_stations": [
+        "07010000"
+      ],
+      "validation_rows": 3287,
+      "metrics": {
+        "specific_baseline": {
+          "overall_rmse": 252514.14106326422,
+          "extreme_rmse": 461319.70281235845,
+          "mae": 212436.84164669152,
+          "r2": -2.0771089042609603
+        },
+        "log_specific": {
+          "overall_rmse": 252783.51260785927,
+          "extreme_rmse": 474374.3804309593,
+          "mae": 217548.3119185787,
+          "r2": -2.0836774685813797
+        },
+        "specific_catboost": {
+          "overall_rmse": 246197.43038407774,
+          "extreme_rmse": 455689.69178367197,
+          "mae": 206483.20726269338,
+          "r2": -1.925084997317327
+        }
+      }
+    },
+    {
+      "fold": 4,
+      "held_out_stations": [
+        "08158000"
+      ],
+      "validation_rows": 3286,
+      "metrics": {
+        "specific_baseline": {
+          "overall_rmse": 40416.522449917946,
+          "extreme_rmse": 61655.491093342236,
+          "mae": 26179.387135198383,
+          "r2": -243.84797565086237
+        },
+        "log_specific": {
+          "overall_rmse": 31592.234473003413,
+          "extreme_rmse": 48154.21060589474,
+          "mae": 21827.02366742249,
+          "r2": -148.6026615288644
+        },
+        "specific_catboost": {
+          "overall_rmse": 36335.59400322149,
+          "extreme_rmse": 52868.10308659643,
+          "mae": 26575.859976033884,
+          "r2": -196.8987998988673
+        }
+      }
+    }
+  ],
+  "experiment_descriptions": {
+    "specific_baseline": "Specific discharge Q/A with the current fixed HGB/CatBoost/LightGBM blend",
+    "log_specific": "log1p(Q/A) with the same fixed HGB/CatBoost/LightGBM blend",
+    "specific_catboost": "Specific discharge Q/A with CatBoost only"
+  }
+}

@@ -1,0 +1,6 @@
+station_id,station_name,latitude,longitude,state,state_code,county,huc,drainage_area_sqmi,contributing_drainage_area_sqmi,usgs_altitude_m,usgs_altitude_unit,metadata_status
+01646500,"POTOMAC RIVER NEAR WASH, DC LITTLE FALLS PUMP STA",38.949777777777776,-77.12763888888888,Maryland,24,Montgomery County,020700081005,11560.0,,37.04,m,success
+02087500,"NEUSE RIVER NEAR CLAYTON, NC",35.6472222222222,-78.4052777777778,North Carolina,37,Johnston County,03020201,1150.0,,127.5,m,success
+07010000,"Mississippi River at St. Louis, MO",38.629,-90.1797777777778,Missouri,29,St. Louis City,071401010403,697000.0,,379.58,m,success
+08158000,"Colorado Rv at Austin, TX",30.24613888888889,-97.68005555555555,Texas,48,Travis County,120902050306,39009.0,27606.0,391.96,m,success
+11447650,SACRAMENTO R A FREEPORT CA,38.4556638888889,-121.501616666667,California,06,Sacramento County,180201630701,,,,,success
