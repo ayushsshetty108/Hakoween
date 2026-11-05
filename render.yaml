@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: floodcast-api
+    name: floodcast-ml-api
     runtime: python
     plan: free
     buildCommand: pip install -r requirements.txt
@@ -20,7 +20,7 @@ services:
       - key: VITE_API_BASE_URL
         fromService:
           type: web
-          name: floodcast-api
+          name: floodcast-ml-api
           property: host
     routes:
       - type: rewrite
