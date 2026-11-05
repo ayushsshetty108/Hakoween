@@ -2,7 +2,7 @@
 
 ## Project
 
-Predict daily `discharge_cfs` at river stations excluded from training. V2 compares direct discharge prediction with basin-normalized specific discharge (`Q / drainage_area_sqmi`) using the same station-held-out folds.
+Predict daily `discharge_cfs` at river stations excluded from training. The default model uses the expanded 24-gauge training set and predicts raw discharge; raw discharge and basin-normalized specific discharge (`Q / drainage_area_sqmi`) were compared using identical station-grouped folds.
 
 ## Author
 
@@ -12,7 +12,7 @@ BMS Institute of Technology and Management
 
 ## Architecture
 
-- `src/models/flood_detection.py` transforms `Q` to `Q/A` and back. `use_log=False`; log transforms are rejected.
+- `src/models/flood_detection.py` supports the experimental `Q/A` target transform. The selected model predicts raw `Q`.
 - `src/models/ensemble.py` blends HGB, CatBoost, and LightGBM with fixed 50/35/15 weights in both wet and dry regimes.
 - `src/validation/cross_validation.py` compares raw and specific-discharge targets with station-grouped folds and computes all four weighted-scoring metrics.
 - `solution.py` trains the selected target mode, writes `predictions.csv`, and calls `verify_submission_guardrails()` before and after serialization.
@@ -33,8 +33,9 @@ python -m unittest discover -s tests -v
 ```
 
 Default input, report, prediction, and artifact paths resolve relative to the
-project folder, so launching `solution.py` from another working directory will
-still find `data/raw/train.csv` and `data/raw/test.csv`.
+project folder. `solution.py` defaults to `data/expanded_24_station/`, which
+contains 24 training gauges and the unseen test gauge. Use `--input-dir
+data/raw` only to run on the original four-gauge dataset.
 
 `acquire_real_data.py` reads station IDs and date ranges from `data/raw/train.csv`
 and `data/raw/test.csv`, downloads measurements from the official USGS and
@@ -45,16 +46,16 @@ new acquired dataset; it overwrites only acquisition outputs under `data/raw/`
 and `data/processed/`, not the model, `predictions.csv`, scoring code, or
 submission validation.
 
-`python -m src.validation.isolated_experiments` runs the current specific-
-discharge blend, a log-specific-discharge ablation, and a CatBoost-only
-specific-discharge candidate on the same four station-held-out folds. It writes
+`python -m src.validation.isolated_experiments` runs the specific-discharge
+blend, a log-specific-discharge ablation, and a CatBoost-only
+specific-discharge candidate on the original four-gauge folds. It writes
 OOF predictions and a comparison report under `reports/isolated_experiments/`;
 it does not refit or overwrite the production artifact or `predictions.csv`.
 The existing 40/30/20/10 scoring rule is used, with local candidate-range
 normalization clearly marked as non-leaderboard scoring.
 
-To compare the same candidates on the expanded 24-station data, whose weather
-is now complete, run:
+To compare those candidates on the expanded 24-station data, whose weather is
+now complete, run:
 
 ```bash
 python -m src.validation.isolated_experiments --input-dir data/expanded_24_station --output-dir reports/expanded_24_station
@@ -94,20 +95,22 @@ discharge and basin attributes, not regression-estimated flow statistics. See
 [USGS NSS services](https://streamstats.usgs.gov/docs/nssservices/) and the
 [USGS service overview](https://www.usgs.gov/streamstats/web-services).
 
-The default command runs the station-held-out raw-vs-specific target comparison,
-fits the final specific-discharge ensemble on all permitted training rows,
+The default command runs the station-held-out raw-vs-specific target comparison
+on the expanded 24-station data, fits the selected raw-discharge ensemble on
+all permitted training rows,
 saves `models/floodcast_final.joblib`, writes `predictions.csv`, then checks the
 serialized CSV. Use `--skip-validation` for a final fit after reviewing the
 OOF reports. `--input-dir`, `--output`, `--report-dir`, and `--artifact` can
 point to organizer files and separate output locations.
 
-By default the final model uses specific discharge. To generate the raw-discharge comparison submission instead:
+Raw discharge is the selected target. To compare on the original four-gauge data:
 
 ```bash
-python solution.py --target-mode raw_discharge
+python solution.py --input-dir data/raw
 ```
 
-Inputs are in `data/raw/`. `train.csv` and `test.csv` define the project station
+The selected default inputs are in `data/expanded_24_station/`. `train.csv` and
+`test.csv` define the project station
 keys and dates. `feature_context.csv`, when present, supplies date-keyed weather
 history for lag/rolling features; discharge is discarded from this context.
 The held-out station has predictors only and no discharge labels.
@@ -117,13 +120,12 @@ The held-out station has predictors only and no discharge labels.
 `cross_validation.py` computes overall RMSE on all OOF rows, extreme-event RMSE on actual flows at or above each station's 90th percentile, MAE, and R². It applies 40/30/20/10 weights after min-max normalization. Pass official all-team best/worst metric values to `compute_weighted_score()` when available. Until then, the report uses the compared OOF candidates' min/max as a local proxy, not an official leaderboard score.
 
 The selected final configuration is the fixed HGB/CatBoost/LightGBM blend,
-`hydro_plus` feature set, and raw specific-discharge target (`Q/A`, `use_log=False`).
-This follows the current executable configuration and the available V2 comparison
-report. The `median_baseline` note in earlier model-selection materials is not
-the configuration currently wired into `solution.py`; no unsupported claim is
-made that it supersedes this pipeline. Final full-data fitting is separate from
-the station-held-out comparison. Validation labels for a held-out station are
-used only for scoring its fold, never to fit models or form predictions.
+`hydro_plus` feature set, raw-discharge target, and expanded 24-gauge training
+data. On the same station-grouped OOF comparison, raw discharge scored better
+than specific discharge on all four metrics. The `median_baseline` note in
+earlier model-selection materials is not the configuration wired into
+`solution.py`. Final full-data fitting is separate from validation; held-out
+station labels are used only for scoring, never for fitting or prediction.
 
 Drainage area must be present, finite, strictly positive, and expressed in
 square miles for both train and test. The pipeline fails clearly if this
@@ -133,16 +135,21 @@ and weather inputs are listed in the model card.
 
 ## Example experiment
 
-On the bundled four-station training example, the fixed HGB/CatBoost/LightGBM blend improved all four pooled OOF metrics when trained on specific discharge:
+On the expanded 24-station training set, the fixed HGB/CatBoost/LightGBM blend
+was evaluated with identical station-grouped folds for both target choices:
 
 | Metric | Raw-discharge target | Specific-discharge target |
 |---|---:|---:|
-| Overall RMSE | 146,080.88 cfs | 128,111.24 cfs |
-| Extreme-event RMSE | 280,308.96 cfs | 234,625.03 cfs |
-| MAE | 73,969.72 cfs | 61,701.65 cfs |
-| R² | -0.2631 | 0.0286 |
+| Overall RMSE | 58,507.37 cfs | 98,465.34 cfs |
+| Extreme-event RMSE | 114,017.44 cfs | 196,579.16 cfs |
+| MAE | 12,542.88 cfs | 14,845.48 cfs |
+| R² | 0.0141 | -1.7923 |
 
-Specific discharge reduced RMSE on 3 of 4 held-out stations. It worsened RMSE at station 08158000 (29,077.79 to 40,416.52 cfs), so the result does not guarantee transfer to every basin. The local 0 vs 100 normalized scores use only these two target modes and are not accuracy percentages or official leaderboard scores. The separate example test gauge has no discharge labels, so its score is unknown.
+The 40/30/20/10 weighted rubric is unchanged. The local normalized score uses
+only these two target modes, so it is not an accuracy percentage or an official
+leaderboard score. The result supports the raw target for this training set but
+does not guarantee transfer to arbitrary basins. The unseen test gauge has no
+discharge labels, so its accuracy is unknown.
 
 ## Final submission checks
 

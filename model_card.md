@@ -12,18 +12,19 @@ Offline prediction of daily river discharge at stations not used for model fitti
 
 ## Prediction target
 
-The V2 target is specific discharge:
+The selected target is daily raw discharge:
 
 ```text
-specific_discharge = discharge_cfs / drainage_area_sqmi
-predicted_discharge_cfs = predicted_specific_discharge * drainage_area_sqmi
+target = discharge_cfs
 ```
 
-The transformer enforces `use_log=False`. Final predictions are in cfs and are clipped to non-negative values.
+Area-normalized discharge remains available for validation comparisons but is
+not used by the final model. Predictions are in cfs and are clipped to
+non-negative values.
 
 ## Models
 
-The regime-gated ensemble contains only:
+The fixed ensemble contains:
 
 | Model | Wet-regime weight | Dry-regime weight |
 |---|---:|---:|
@@ -31,7 +32,8 @@ The regime-gated ensemble contains only:
 | CatBoost (`cat`) | 0.35 | 0.35 |
 | LightGBM (`lgb`) | 0.15 | 0.15 |
 
-ExtraTrees and XGBoost are excluded. Wet/dry classification uses precipitation and soil moisture; the required blend weights are identical in both regimes.
+ExtraTrees and XGBoost are excluded. The same 50/35/15 blend is used in all
+conditions; wet/dry regime detection does not change those weights.
 
 ## Inputs and features
 
@@ -52,20 +54,32 @@ The official normalization bounds depend on all submissions. Before those values
 
 ## Example validation result
 
-The bundled example has four training gauges. With the fixed ensemble and identical leave-one-station-out folds, the pooled results were:
+The expanded training set has 24 gauges. In the identical station-grouped
+out-of-fold comparison, the pooled results were:
 
 | Metric | Raw-discharge target | Specific-discharge target |
 |---|---:|---:|
-| Overall RMSE | 146,080.88 cfs | 128,111.24 cfs |
-| Extreme-event RMSE | 280,308.96 cfs | 234,625.03 cfs |
-| MAE | 73,969.72 cfs | 61,701.65 cfs |
-| R² | -0.2631 | 0.0286 |
+| Overall RMSE | 58,507.37 cfs | 98,465.34 cfs |
+| Extreme-event RMSE | 114,017.44 cfs | 196,579.16 cfs |
+| MAE | 12,542.88 cfs | 14,845.48 cfs |
+| R² | 0.0141 | -1.7923 |
 
-Specific discharge lowered RMSE on three of four held-out gauges. It raised RMSE at station 08158000 from 29,077.79 to 40,416.52 cfs. The separate California example test gauge has no discharge labels, so no test accuracy is claimed. The score values in `reports/target_comparison.json` are normalized only across the two tested target modes; they are not official leaderboard scores.
+Raw discharge improved all four pooled metrics in this comparison. The
+normalized local score is 100 for raw discharge and 0 for specific discharge
+because only those two candidates are compared; it is not an accuracy
+percentage or official leaderboard score. See
+`reports/target_comparison.json` for fold-level
+details. The separate test gauge has no discharge labels, so no test accuracy
+is claimed.
 
 ## Data and limitations
 
-The included train/test CSVs are API-generated examples, not organizer-provided data. They contain four training gauges and one held-out gauge; the test gauge's discharge was not collected. This small sample cannot establish reliable transfer to arbitrary basins. The fixed weighted blend and the V2 target scale are experiment choices, not guaranteed improvements. Review `reports/target_comparison.json` and per-station OOF diagnostics before selecting a model for an official run.
+The default uses 24 training gauges and one held-out test gauge in
+`data/expanded_24_station/`. The original four-gauge example remains under
+`data/raw/`. These are supplemental API-acquired observations, not
+organizer-provided test labels. Even the expanded cross-validation results
+cannot establish reliable transfer to arbitrary basins. The unseen test
+gauge's discharge was not collected; no test accuracy can be claimed.
 
 Weather is same-day historical data, so predictions are not lead-time forecasts unless future weather forecasts are supplied. API coverage and basin attributes vary by station. Do not use these predictions for public warnings, evacuation, or infrastructure operation.
 
@@ -82,12 +96,12 @@ python -m unittest discover -s tests -v
 The training command writes the final fitted model and metadata to
 `models/floodcast_final.joblib`, the submission to `predictions.csv`, and
 station-held-out reports to `reports/`. The artifact records the exact feature
-names, `hydro_plus` schema, ensemble weights, target mode, and disabled log
-transformation. Use `python solution.py --skip-validation` only after reviewing
+names, `hydro_plus` schema, ensemble weights, and target mode. Use
+`python solution.py --skip-validation` only after reviewing
 the saved out-of-fold comparison when a faster final refit is needed.
 
-The score weights are 40% overall RMSE, 30% station-specific top-decile RMSE,
-20% MAE, and 10% R². The official normalized score requires the leaderboard's
-all-team best and worst values. Until provided, the bundled local score is
-normalized over the two compared target modes and must not be interpreted as an
-official score.
+The score weights remain 40% overall RMSE, 30% station-specific top-decile
+RMSE, 20% MAE, and 10% R². The official normalized score requires the
+leaderboard's all-team best and worst values. Until provided, the local score
+is normalized over the two compared target modes and must not be interpreted
+as an official score.

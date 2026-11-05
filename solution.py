@@ -1,4 +1,4 @@
-"""Train the V2 basin-normalized blend, validate, and write predictions.csv."""
+"""Train the selected discharge blend, validate, and write predictions.csv."""
 from __future__ import annotations
 
 import argparse
@@ -16,6 +16,8 @@ from src.models.flood_detection import SpecificDischargeTransformer
 from src.validation.cross_validation import build_station_error_report, run_target_comparison
 
 PROJECT_ROOT = Path(__file__).resolve().parent
+DEFAULT_INPUT_DIR = "data/expanded_24_station"
+DEFAULT_TARGET_MODE = "raw_discharge"
 
 
 def _project_path(path: str | Path) -> Path:
@@ -54,8 +56,8 @@ def _load_context(input_dir: str | Path) -> pd.DataFrame | None:
     return frame
 
 
-def run(input_dir="data/raw", output="predictions.csv", report_dir="reports",
-        target_mode="specific_discharge", artifact_path="models/floodcast_final.joblib",
+def run(input_dir=DEFAULT_INPUT_DIR, output="predictions.csv", report_dir="reports",
+        target_mode=DEFAULT_TARGET_MODE, artifact_path="models/floodcast_final.joblib",
         run_validation=True) -> dict:
     input_root = _project_path(input_dir)
     train_df, test_df = load_inputs(input_root)
@@ -142,12 +144,12 @@ def run(input_dir="data/raw", output="predictions.csv", report_dir="reports",
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--input-dir", default="data/raw")
+    parser.add_argument("--input-dir", default=DEFAULT_INPUT_DIR)
     parser.add_argument("--output", default="predictions.csv")
     parser.add_argument("--report-dir", default="reports")
     parser.add_argument("--artifact", default="models/floodcast_final.joblib")
     parser.add_argument("--skip-validation", action="store_true", help="Skip station-held-out OOF comparison")
-    parser.add_argument("--target-mode", choices=["specific_discharge", "raw_discharge"], default="specific_discharge")
+    parser.add_argument("--target-mode", choices=["specific_discharge", "raw_discharge"], default=DEFAULT_TARGET_MODE)
     args = parser.parse_args()
     print(json.dumps(run(args.input_dir, args.output, args.report_dir, args.target_mode,
                          args.artifact, not args.skip_validation), indent=2))

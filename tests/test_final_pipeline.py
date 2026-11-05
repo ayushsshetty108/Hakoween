@@ -7,7 +7,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
-from solution import verify_submission_guardrails
+from solution import DEFAULT_INPUT_DIR, DEFAULT_TARGET_MODE, verify_submission_guardrails
 from src.data.preprocessing import validate_inputs
 from src.hydrology.features import make_features
 from src.models.flood_detection import SpecificDischargeTransformer
@@ -38,6 +38,10 @@ def sample_frame(stations=("A", "B"), target=True):
 
 
 class FinalPipelineTests(unittest.TestCase):
+    def test_selected_defaults_use_expanded_raw_discharge_training(self):
+        self.assertEqual(DEFAULT_INPUT_DIR, "data/expanded_24_station")
+        self.assertEqual(DEFAULT_TARGET_MODE, "raw_discharge")
+
     def test_specific_discharge_round_trip(self):
         transform = SpecificDischargeTransformer(use_log=False)
         q = np.array([0.0, 40.0, 125.0])
