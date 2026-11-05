@@ -1,185 +1,129 @@
-# FLOODCAST 
+# FLOODCAST
 
-## Project
+FLOODCAST estimates daily river discharge (`discharge_cfs`) for station-date rows. The Python pipeline builds leakage-safe weather and hydrology features, validates models using station-held-out folds, fits a fixed HGB/CatBoost/LightGBM blend, and writes a submission CSV. The repository also contains a React dashboard for monitoring, forecasts, catchments, and model performance.
 
-Predict daily `discharge_cfs` at river stations excluded from training. The default model uses the expanded 24-gauge training set and predicts raw discharge; raw discharge and basin-normalized specific discharge (`Q / drainage_area_sqmi`) were compared using identical station-grouped folds.
+## Project architecture
+
+### Python modeling and data pipeline
+
+1. **Acquire and prepare data.** `acquire_real_data.py` reads station/date keys and station metadata from `data/raw/`, retrieves training discharge from the USGS Water Data API, weather history from Open-Meteo, and catchment attributes from USGS StreamStats. It stores cleaned tables and raw responses separately and writes provenance and acquisition summaries. Test-station discharge is not requested.
+2. **Load and validate inputs.** `src/data/preprocessing.py` validates and loads the train/test inputs.
+3. **Build features.** `src/hydrology/features.py` creates calendar, weather lag/rolling, precipitation-history, temperature, and drainage-area proxy features. It excludes discharge from feature generation and can use `feature_context.csv` for historical predictor context. The production pipeline uses the `hydro_plus` feature set.
+4. **Train and predict.** `src/models/train_models.py` builds the estimators; `src/models/ensemble.py` fits HGB, CatBoost, and LightGBM and blends their predictions with fixed 50/35/15 weights. The production target is raw discharge. `src/models/flood_detection.py` provides the optional specific-discharge (`Q/A`) transform for comparison experiments.
+5. **Validate and report.** `src/validation/cross_validation.py` performs station-grouped target comparisons and calculates the scoring metrics. `src/validation/isolated_experiments.py` runs separate candidate experiments without overwriting production outputs.
+6. **Write a submission.** `solution.py` orchestrates features, optional validation, final fitting, artifact serialization, and CSV guardrails. It writes `prediction.csv` and, by default, `models/floodcast_final.joblib`. `validate_submission.py` independently checks the saved CSV against the selected `test.csv`.
+
+The production model is the fixed HGB/CatBoost/LightGBM blend with the `hydro_plus` features and raw-discharge target. The wet and dry regimes currently use the same weights. ExtraTrees and XGBoost are not part of this pipeline. See [`model_card.md`](model_card.md) for model details and feature inputs.
+
+### Frontend dashboard
+
+`frontend/` is a Vite/React application with Overview, Monitoring, Predictions, Weather, Catchment, and Performance pages. Components and page routes live in `frontend/src/`; API and data adapters live in `frontend/src/services/`. The repository does **not** include a backend. The frontend README documents its expected API routes, local development data routes, and live USGS/Open-Meteo integrations: [`frontend/README.md`](frontend/README.md).
+
+## Install and run the Python pipeline
+
+Run commands from the repository root:
+
+```bash
+python -m pip install -r requirements.txt
+python solution.py
+python validate_submission.py --test data/expanded_24_station/test.csv
+python -m unittest discover -s tests -v
+```
+
+`solution.py` defaults to `data/expanded_24_station/`, uses raw discharge, runs station-held-out validation, writes OOF reports under `reports/`, saves the model artifact, and creates `prediction.csv`. Use `--skip-validation` to fit without rerunning the OOF comparison. The `--input-dir`, `--output`, `--report-dir`, `--artifact`, and `--target-mode` options can select other inputs and output locations. Relative paths resolve from the project directory.
+
+To use the original four-station dataset instead:
+
+```bash
+python solution.py --input-dir data/raw
+```
+
+To acquire or refresh the original dataset's source data, run:
+
+```bash
+python acquire_real_data.py
+```
+
+Acquisition requires the source input files under `data/raw/`. It writes acquisition tables/responses under `data/raw/` and integrated data, provenance, and summary files under `data/processed/`; review `data/processed/data_provenance.json` and the acquisition report before using the results. Acquisition may exit with a nonzero status if source coverage or catchment verification is incomplete.
+
+Run the isolated candidate experiments separately:
+
+```bash
+python -m src.validation.isolated_experiments
+python -m src.validation.isolated_experiments --input-dir data/expanded_24_station --output-dir reports/expanded_24_station
+```
+
+These runs write experiment reports and OOF predictions to their output directory and do not refit the production artifact or replace `prediction.csv`.
+
+## Run the frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Create a production bundle with `npm run build`. For a hosted backend on another origin, configure `VITE_API_BASE_URL` as described in `frontend/README.md`.
+
+## Data and validation notes
+
+- The default model input is `data/expanded_24_station/`; `train.csv` and `test.csv` define the requested station-date rows. `feature_context.csv`, when present, provides date-keyed historical predictors; discharge is discarded from that context. The held-out test station has no discharge labels.
+- Drainage area must be finite and strictly positive in square miles for both train and test rows. The pipeline does not infer a replacement area. Missing weather predictors are handled by the fitted imputers.
+- `solution.py` checks the submission schema, row count, station/date order, finite predictions, and non-negative discharge before and after writing the CSV. `validate_submission.py` additionally checks key uniqueness, exactly-once station-date coverage, and accidental index columns.
+- The default raw-discharge target was selected over specific discharge in the station-grouped comparison on the expanded training data. Those validation results do not establish accuracy on the unseen test gauge.
+- Data sources and acquisition limitations: [USGS Water Data API](https://api.waterdata.usgs.gov/docs/ogcapi), [Open-Meteo Historical Weather API](https://open-meteo.com/en/docs/historical-weather-api), and [USGS StreamStats Web Services](https://www.usgs.gov/streamstats/web-services). Catchment attributes are retained only when watershed verification checks pass; consult the provenance report for station-level coverage.
+
+## Repository structure
+
+```text
+Hakoween/
+├── README.md
+├── model_card.md
+├── requirements.txt
+├── acquire_real_data.py
+├── solution.py
+├── validate_submission.py
+├── prediction.csv                 # Example/current submission output
+├── data/
+│   ├── raw/                       # Original train/test keys, station metadata,
+│   │                              # acquired source tables and raw API responses
+│   ├── expanded_24_station/       # Expanded training/test inputs and context
+│   └── processed/                 # Integrated dataset and acquisition reports
+├── reports/
+│   ├── data_acquisition_report.md
+│   ├── expanded_24_station/
+│   └── isolated_experiments/
+├── models/                        # Generated model artifact (not checked in)
+├── src/
+│   ├── data/
+│   │   ├── preprocessing.py
+│   │   ├── expand_station_dataset.py
+│   │   ├── fetch_missing_weather.py
+│   │   └── finalize_expanded_from_cache.py
+│   ├── hydrology/features.py
+│   ├── models/
+│   │   ├── baseline.py
+│   │   ├── ensemble.py
+│   │   ├── flood_detection.py
+│   │   └── train_models.py
+│   └── validation/
+│       ├── cross_validation.py
+│       └── isolated_experiments.py
+├── tests/
+│   └── test_final_pipeline.py
+└── frontend/
+    ├── package.json
+    ├── index.html
+    └── src/
+        ├── App.jsx
+        ├── components/
+        ├── hooks/
+        ├── pages/
+        └── services/
+```
 
 ## Author
 
 **PREETHAM B**  
 Artificial Intelligence and Machine Learning Department  
 BMS Institute of Technology and Management
-
-## Architecture
-
-- `src/models/flood_detection.py` supports the experimental `Q/A` target transform. The selected model predicts raw `Q`.
-- `src/models/ensemble.py` blends HGB, CatBoost, and LightGBM with fixed 50/35/15 weights in both wet and dry regimes.
-- `src/validation/cross_validation.py` compares raw and specific-discharge targets with station-grouped folds and computes all four weighted-scoring metrics.
-- `solution.py` trains the selected target mode, writes `prediction.csv`, and calls `verify_submission_guardrails()` before and after serialization.
-
-ExtraTrees and XGBoost are not part of this pipeline.
-
-## Install and run
-
-From the project root in VS Code:
-
-```bash
-python -m pip install -r requirements.txt
-python acquire_real_data.py
-python -m src.validation.isolated_experiments
-python solution.py
-python validate_submission.py --test data/expanded_24_station/test.csv
-python -m unittest discover -s tests -v
-```
-
-Default input, report, prediction, and artifact paths resolve relative to the
-project folder. `solution.py` defaults to `data/expanded_24_station/`, which
-contains 24 training gauges and the unseen test gauge. Use `--input-dir
-data/raw` only to run on the original four-gauge dataset.
-
-`acquire_real_data.py` reads station IDs and date ranges from `data/raw/train.csv`
-and `data/raw/test.csv`, downloads measurements from the official USGS and
-Open-Meteo APIs, and saves raw response bodies alongside cleaned tables. It
-queries USGS discharge only for training station/date keys. It downloads
-weather for both training and test station coordinates. Run it before using the
-new acquired dataset; it overwrites only acquisition outputs under `data/raw/`
-and `data/processed/`, not the model, `predictions.csv`, scoring code, or
-submission validation.
-
-`python -m src.validation.isolated_experiments` runs the specific-discharge
-blend, a log-specific-discharge ablation, and a CatBoost-only
-specific-discharge candidate on the original four-gauge folds. It writes
-OOF predictions and a comparison report under `reports/isolated_experiments/`;
-it does not refit or overwrite the production artifact or `predictions.csv`.
-The existing 40/30/20/10 scoring rule is used, with local candidate-range
-normalization clearly marked as non-leaderboard scoring.
-
-To compare those candidates on the expanded 24-station data, whose weather is
-now complete, run:
-
-```bash
-python -m src.validation.isolated_experiments --input-dir data/expanded_24_station --output-dir reports/expanded_24_station
-```
-
-That run uses one held-out fold per station and leaves production files untouched.
-
-Acquisition outputs:
-
-- `data/raw/usgs_discharge.csv` and `data/raw/usgs_station_metadata.csv`
-- `data/raw/openmeteo_weather.csv`
-- `data/raw/streamstats_catchment_attributes.csv`
-- `data/processed/floodcast_dataset.csv`
-- `data/processed/data_provenance.json` and `data/processed/acquisition_summary.json`
-- Original JSON API responses under `data/raw/*_responses/`; request failures in
-  `data/raw/acquisition_failures.json`
-
-Weather uses one consistent ERA5 reanalysis model from the Open-Meteo Historical
-Weather API. The four requested daily weather variables are returned directly;
-`soil_moisture_0_7cm` and `soil_moisture_7_28cm` are daily means of their 24 hourly
-values and remain missing if unavailable. StreamStats attributes are retained
-only when the returned basin passes outlet geometry, snap, HUC where applicable,
-and USGS drainage-area checks. Unsupported attributes and unverified watersheds
-remain missing with a recorded reason. Current source limits mean the acquired
-catchment table is not complete for all stations; see the provenance report
-before running the specific-discharge model, which requires positive drainage
-area for every training and test row.
-
-Sources: [USGS Water Data API](https://api.waterdata.usgs.gov/docs/ogcapi),
-[Open-Meteo Historical Weather API](https://open-meteo.com/en/docs/historical-weather-api),
-[USGS StreamStats Web Services](https://www.usgs.gov/streamstats/web-services),
-[SS-Delineate and SS-Hydro workflow](https://s3.us-east-1.amazonaws.com/streamstats.usgs.gov/StreamStatsFlowStatisticsWorkflow.pdf).
-The USGS National Streamflow Statistics (NSS) service remains documented as a
-separate service for regional regression estimates of flow statistics. It was
-investigated but not used here because this acquisition needs observed daily
-discharge and basin attributes, not regression-estimated flow statistics. See
-[USGS NSS services](https://streamstats.usgs.gov/docs/nssservices/) and the
-[USGS service overview](https://www.usgs.gov/streamstats/web-services).
-
-The default command runs the station-held-out raw-vs-specific target comparison
-on the expanded 24-station data, fits the selected raw-discharge ensemble on
-all permitted training rows,
-saves `models/floodcast_final.joblib`, writes `prediction.csv`, then checks the
-serialized CSV. Use `--skip-validation` for a final fit after reviewing the
-OOF reports. `--input-dir`, `--output`, `--report-dir`, and `--artifact` can
-point to organizer files and separate output locations.
-
-Raw discharge is the selected target. To compare on the original four-gauge data:
-
-```bash
-python solution.py --input-dir data/raw
-```
-
-The selected default inputs are in `data/expanded_24_station/`. `train.csv` and
-`test.csv` define the project station
-keys and dates. `feature_context.csv`, when present, supplies date-keyed weather
-history for lag/rolling features; discharge is discarded from this context.
-The held-out station has predictors only and no discharge labels.
-
-## Scoring and validation
-
-`cross_validation.py` computes overall RMSE on all OOF rows, extreme-event RMSE on actual flows at or above each station's 90th percentile, MAE, and R². It applies 40/30/20/10 weights after min-max normalization. Pass official all-team best/worst metric values to `compute_weighted_score()` when available. Until then, the report uses the compared OOF candidates' min/max as a local proxy, not an official leaderboard score.
-
-The selected final configuration is the fixed HGB/CatBoost/LightGBM blend,
-`hydro_plus` feature set, raw-discharge target, and expanded 24-gauge training
-data. On the same station-grouped OOF comparison, raw discharge scored better
-than specific discharge on all four metrics. The `median_baseline` note in
-earlier model-selection materials is not the configuration wired into
-`solution.py`. Final full-data fitting is separate from validation; held-out
-station labels are used only for scoring, never for fitting or prediction.
-
-Drainage area must be present, finite, strictly positive, and expressed in
-square miles for both train and test. The pipeline fails clearly if this
-requirement is not met; it does not infer or substitute area. Missing weather
-predictors are handled by the fitted median imputers. Static catchment values
-and weather inputs are listed in the model card.
-
-## Example experiment
-
-On the expanded 24-station training set, the fixed HGB/CatBoost/LightGBM blend
-was evaluated with identical station-grouped folds for both target choices:
-
-| Metric | Raw-discharge target | Specific-discharge target |
-|---|---:|---:|
-| Overall RMSE | 58,507.37 cfs | 98,465.34 cfs |
-| Extreme-event RMSE | 114,017.44 cfs | 196,579.16 cfs |
-| MAE | 12,542.88 cfs | 14,845.48 cfs |
-| R² | 0.0141 | -1.7923 |
-
-The 40/30/20/10 weighted rubric is unchanged. The local normalized score uses
-only these two target modes, so it is not an accuracy percentage or an official
-leaderboard score. The result supports the raw target for this training set but
-does not guarantee transfer to arbitrary basins. The unseen test gauge has no
-discharge labels, so its accuracy is unknown.
-
-## Final submission checks
-
-The guardrail requires exactly three columns in this order: `station_id`, `date`, `discharge_cfs`. It checks test row count, exact station/date order, finite values, and non-negative discharge. Predictions are clipped to at least `0.0` before the checks run.
-
-The independent `validate_submission.py` additionally checks unique keys,
-exactly-once station-date coverage, and accidental index columns, printing a
-separate PASS/FAIL line for each check. The fitted estimator, target transformer,
-feature names, target mode, model family, random seed, and blend weights are
-stored in the joblib model artifact.
-
-## File structure
-
-```text
-FLOODCAST_Hackathon_V2/
-├── README.md
-├── model_card.md
-├── requirements.txt
-├── solution.py
-├── data/
-│   ├── raw/
-│   └── processed/
-├── reports/
-└── src/
-    ├── data/preprocessing.py
-    ├── hydrology/features.py
-    ├── models/
-    │   ├── baseline.py
-    │   ├── ensemble.py
-    │   ├── flood_detection.py
-    │   └── train_models.py
-    └── validation/cross_validation.py
-```
