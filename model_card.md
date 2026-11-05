@@ -14,7 +14,7 @@ Offline prediction of daily river discharge at stations not used for model fitti
 
 The selected target is daily raw discharge:
 
-```text
+`''
 target = discharge_cfs
 ```
 
@@ -27,7 +27,7 @@ non-negative values.
 The fixed ensemble contains:
 
 | Model | Wet-regime weight | Dry-regime weight |
-|---|---:|---:|
+|-------|------------------:|------------------:|
 | HistGradientBoosting (`hgb`) | 0.50 | 0.50 |
 | CatBoost (`cat`) | 0.35 | 0.35 |
 | LightGBM (`lgb`) | 0.15 | 0.15 |
@@ -71,6 +71,11 @@ percentage or official leaderboard score. See
 `reports/target_comparison.json` for fold-level
 details. The separate test gauge has no discharge labels, so no test accuracy
 is claimed.
+
+A follow-up eight-fold station-held-out check compared the current raw blend
+with several CatBoost settings and a `log1p(raw discharge)` blend. No candidate
+improved all four metrics, so the production configuration was retained.
+Results and tested settings are in `reports/parameter_tuning.md`.
 
 ## Data and limitations
 

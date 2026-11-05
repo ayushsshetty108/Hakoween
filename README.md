@@ -15,7 +15,7 @@ BMS Institute of Technology and Management
 - `src/models/flood_detection.py` supports the experimental `Q/A` target transform. The selected model predicts raw `Q`.
 - `src/models/ensemble.py` blends HGB, CatBoost, and LightGBM with fixed 50/35/15 weights in both wet and dry regimes.
 - `src/validation/cross_validation.py` compares raw and specific-discharge targets with station-grouped folds and computes all four weighted-scoring metrics.
-- `solution.py` trains the selected target mode, writes `predictions.csv`, and calls `verify_submission_guardrails()` before and after serialization.
+- `solution.py` trains the selected target mode, writes `prediction.csv`, and calls `verify_submission_guardrails()` before and after serialization.
 
 ExtraTrees and XGBoost are not part of this pipeline.
 
@@ -28,7 +28,7 @@ python -m pip install -r requirements.txt
 python acquire_real_data.py
 python -m src.validation.isolated_experiments
 python solution.py
-python validate_submission.py
+python validate_submission.py --test data/expanded_24_station/test.csv
 python -m unittest discover -s tests -v
 ```
 
@@ -98,7 +98,7 @@ discharge and basin attributes, not regression-estimated flow statistics. See
 The default command runs the station-held-out raw-vs-specific target comparison
 on the expanded 24-station data, fits the selected raw-discharge ensemble on
 all permitted training rows,
-saves `models/floodcast_final.joblib`, writes `predictions.csv`, then checks the
+saves `models/floodcast_final.joblib`, writes `prediction.csv`, then checks the
 serialized CSV. Use `--skip-validation` for a final fit after reviewing the
 OOF reports. `--input-dir`, `--output`, `--report-dir`, and `--artifact` can
 point to organizer files and separate output locations.

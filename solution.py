@@ -1,4 +1,4 @@
-"""Train the selected discharge blend, validate, and write predictions.csv."""
+"""Train the selected discharge blend, validate, and write prediction.csv."""
 from __future__ import annotations
 
 import argparse
@@ -29,7 +29,7 @@ def _project_path(path: str | Path) -> Path:
 def verify_submission_guardrails(test_df: pd.DataFrame, predictions: pd.DataFrame) -> None:
     """Enforce the output schema, order, row count, and non-negative finite flow."""
     if list(predictions.columns) != ["station_id", "date", "discharge_cfs"]:
-        raise ValueError("predictions.csv must contain exactly station_id, date, discharge_cfs in that order")
+        raise ValueError("Prediction output must contain exactly station_id, date, discharge_cfs in that order")
     if len(predictions) != len(test_df):
         raise ValueError(f"Prediction row count {len(predictions)} != test row count {len(test_df)}")
     expected_station = test_df["station_id"].astype(str).reset_index(drop=True)
@@ -56,7 +56,7 @@ def _load_context(input_dir: str | Path) -> pd.DataFrame | None:
     return frame
 
 
-def run(input_dir=DEFAULT_INPUT_DIR, output="predictions.csv", report_dir="reports",
+def run(input_dir=DEFAULT_INPUT_DIR, output="prediction.csv", report_dir="reports",
         target_mode=DEFAULT_TARGET_MODE, artifact_path="models/floodcast_final.joblib",
         run_validation=True) -> dict:
     input_root = _project_path(input_dir)
@@ -145,7 +145,7 @@ def run(input_dir=DEFAULT_INPUT_DIR, output="predictions.csv", report_dir="repor
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-dir", default=DEFAULT_INPUT_DIR)
-    parser.add_argument("--output", default="predictions.csv")
+    parser.add_argument("--output", default="prediction.csv")
     parser.add_argument("--report-dir", default="reports")
     parser.add_argument("--artifact", default="models/floodcast_final.joblib")
     parser.add_argument("--skip-validation", action="store_true", help="Skip station-held-out OOF comparison")

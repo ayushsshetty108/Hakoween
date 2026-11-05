@@ -1,4 +1,4 @@
-"""Validate predictions.csv against the exact test.csv keys and ordering."""
+"""Validate prediction.csv against the exact test.csv keys and ordering."""
 from __future__ import annotations
 
 import argparse
@@ -80,7 +80,7 @@ def validate_submission(test_path: str | Path, predictions_path: str | Path) -> 
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--test", default=str(PROJECT_ROOT / "data/raw/test.csv"))
-    parser.add_argument("--predictions", default=str(PROJECT_ROOT / "predictions.csv"))
+    parser.add_argument("--predictions", default=str(PROJECT_ROOT / "prediction.csv"))
     args = parser.parse_args()
     results = validate_submission(args.test, args.predictions)
     for name, passed, detail in results:
