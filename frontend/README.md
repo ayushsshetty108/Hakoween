@@ -1,8 +1,10 @@
 # FLOODCAST frontend
 
-Run `npm install`, then `npm run dev` from this directory. `npm run build` creates the production bundle.
+Run `npm ci`, then `npm run dev` from this directory. `npm run build` creates the production bundle.
 
-This frontend reuses project station metadata, historical station observations, and processed catchment files through the existing read-only `/workspace-data/*` development routes. Source datasets are not copied or edited. Fields are shown as unavailable when the source is blank or rejected.
+The application includes `/dashboard`, `/live-map`, `/stations`, `/predictions`, `/analytics`, `/flood-alerts`, `/model-performance`, `/data-explorer`, and `/about`. Existing `/weather` and `/catchment` pages remain available. Source datasets are read-only and are not copied or edited.
+
+The Vite-only `/workspace-data/*` routes expose an explicit allowlist of project files for local development, including the generated root-level `prediction.csv` and saved validation reports. They do not expose arbitrary files, environment variables, or secrets. These routes are not present in the production bundle. Set `VITE_WORKSPACE_DATA_BASE_URL` to a production API base that implements the same dataset IDs (`predictions`, `train`, `test`, `expanded_stations`, `stations`, `discharge`, `weather`, `catchment`, `oof_raw`, `per_station_raw`, and `target_comparison`). The prediction and validation pages show an unavailable state if their source file or endpoint is missing.
 
 ## Live river monitoring
 
@@ -15,6 +17,8 @@ In development, `src/services/liveStations.js` requests the USGS Water Data API 
 ## Backend adapter
 
 The backend is not present in this project. `src/services/api.js` contains the reusable frontend adapter; set `VITE_API_BASE_URL` when the API is hosted on another origin.
+
+Start the application with `npm run dev` and build it with `npm run build`. The development data endpoint resolves project files from the repository root, so run Vite from `frontend/`.
 
 | Route | Frontend use |
 | --- | --- |

@@ -17,7 +17,7 @@ export function Sidebar({ mobileOpen, close }) {
   useEffect(()=>close(),[location.pathname])
   return <aside className={`sidebar ${mobileOpen?'mobile-open':''}`}>
     <div className="brand"><div className="brand-mark"><Waves size={20}/></div><div><strong>FLOOD<span>CAST</span></strong><small>RIVER INTELLIGENCE</small></div><button className="mobile-close" onClick={close} aria-label="Close navigation"><X size={18}/></button></div>
-    <div className="nav-label">WORKSPACE</div><nav>{NAV.map(({to,label,icon:Icon})=><NavLink key={to} to={to} end={to==='/'} className={({isActive})=>`nav-link ${isActive?'active':''}`}><Icon size={17}/><span>{label}</span>{to==='/monitoring'&&<span className="nav-count">04</span>}</NavLink>)}</nav>
+    <div className="nav-label">WORKSPACE</div><nav>{NAV.map(({to,label,icon:Icon})=><NavLink key={to} to={to} end={to==='/dashboard'} className={({isActive})=>`nav-link ${isActive?'active':''}`}><Icon size={17}/><span>{label}</span>{to==='/live-map'&&<span className="nav-count">04</span>}</NavLink>)}</nav>
     <div className="sidebar-bottom"><div className="system-card"><span className="status-dot"/><div><b>Project data ready</b><small>Local source files detected</small></div><ChevronDown size={14}/></div><div className="profile"><div className="avatar">FC</div><div><b>Floodcast Lab</b><small>Research workspace</small></div><ChevronDown size={14}/></div></div>
   </aside>
 }
@@ -28,9 +28,10 @@ export function Topbar({ onMenu }) {
   const {stationId,setStationId,dateRange,setDateRange}=useWorkspaceState()
   const liveState=useLiveStations()
   const today=new Intl.DateTimeFormat('en-US',{month:'short',day:'2-digit',year:'numeric'}).format(new Date()).toUpperCase()
-  const label=location.pathname==='/monitoring'?'LIVE + MODEL DATA':'HISTORICAL DATA'
+  const activePage=NAV.find(item=>item.to===location.pathname||location.pathname.startsWith(`${item.to}/`))
+  const label=['/monitoring','/live-map'].includes(location.pathname)?'LIVE + MODEL DATA':'HISTORICAL DATA'
   const dateOptions=[{value:'7',label:'7 days'},{value:'30',label:'30 days'},{value:'90',label:'90 days'},{value:'365',label:'12 months'},{value:'all',label:'All records'}]
-  return <header className="topbar"><button className="mobile-menu" onClick={onMenu} aria-label="Open navigation"><Menu size={20}/></button><div className="breadcrumb"><span>Workspace</span><b>/</b><strong>{NAV.find(n=>n.to===location.pathname)?.label||'Overview'}</strong></div><div className="top-actions"><div className="global-tools"><Select value={stationId} onChange={setStationId} options={(stations||[]).map(site=>({value:site.id,label:site.id}))} label="Global station"/><Select value={dateRange} onChange={setDateRange} options={dateOptions} label="Global date range"/></div><NotificationCenter stations={stations||[]} snapshot={liveState.snapshot} error={liveState.error}/><span className="live-status"><i/> {label}</span><div className="top-divider"/><div className="date-label">{today}</div></div></header>
+  return <header className="topbar"><button className="mobile-menu" onClick={onMenu} aria-label="Open navigation"><Menu size={20}/></button><div className="breadcrumb"><span>Workspace</span><b>/</b><strong>{activePage?.label||'Dashboard'}</strong></div><div className="top-actions"><div className="global-tools"><Select value={stationId} onChange={setStationId} options={(stations||[]).map(site=>({value:site.id,label:site.id}))} label="Global station"/><Select value={dateRange} onChange={setDateRange} options={dateOptions} label="Global date range"/></div><NotificationCenter stations={stations||[]} snapshot={liveState.snapshot} error={liveState.error}/><span className="live-status"><i/> {label}</span><div className="top-divider"/><div className="date-label">{today}</div></div></header>
 }
 
 function NotificationCenter({stations,snapshot,error}) {

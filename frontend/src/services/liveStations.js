@@ -89,6 +89,9 @@ export async function fetchLiveStationSnapshot({ signal, force = false } = {}) {
   if (inFlight) return inFlight
   inFlight = (async () => {
     try {
+      if (import.meta.env?.DEV && !import.meta.env?.VITE_API_BASE_URL) {
+        throw new Error('No Floodcast backend URL configured for local development.')
+      }
       const payload = await getApiLiveStations({ signal })
       const [stations, predictionsResult] = await Promise.all([
         Promise.resolve(normalizeBackendRows(payload)),
